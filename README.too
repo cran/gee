@@ -1,0 +1,189 @@
+SHORT INSTALL/TEST DIRECTIONS FOR MOST POPULAR
+UNIX PLATFORMS RUNNING Splus 3.3 (with thanks
+to Prof. Brian Ripley, who provided sequence 1) 
+below):
+
+0)place all source code from the shar in the 
+directory that you intend to use as a library 
+component.  you should name this directory "gee"
+or you may have to make some modifications
+to the "dyn.load" commands used in the test
+script.
+
+1)carry out the following:
+
+Splus CHAPTER *.c *.d *.q
+make install
+make dyn.load
+Splus < First.lib.S
+
+---------------------------------
+
+[Note added Tue Sep 10 18:29:38 EDT 1996 --
+Bill Dunlap of Mathsoft/StatSci kindly provided
+patches that render this code acceptable to
+alint and also to prevent memory leaks detected
+by Purify.  The patches have been applied
+in this distribution.  These patches also
+correct a problematic reference to fgetc and
+a faulty longjmp macro call.  None of these
+problems produced any known numerical errors;
+instead, these conditions induced requirements 
+for source code modifications or load line 
+alterations in order for any compilation or 
+linkage of the programs to succeed.
+
+The file "gee.sa.c", which may be used for
+standalone execution, has been moved to a
+subdirectory "STANDALONE", so that its presence
+does not interfere with the construction of
+Splus-loadable objects as described below.]
+
+gee support @(#) README.also 1.2 97/08/13
+README for S-PLUS functions for gee
+-----------------------------------
+Generalized linear models for clustered data via
+``generalized estimating equations (GEE)''
+
+Primary reference: Kung-Yee Liang and Scott L. Zeger,
+"Longitudinal data analysis using generalized linear
+models", Biometrika (1986) v.73, pp.13-22.
+
+These codes, prepared by V. Carey and Aidan McDermott
+of Channing Laboratory, Harvard Medical School,
+implement GEE mostly as described in the above paper.
+Certain deviations from formulas given
+in the paper were adopted to preserve compatibility
+with prior implementations in IML (by M.R. Karim).
+Modifications allowing probit link were graciously
+supplied by Paul Catalano, Dept Biostatistics,
+Harvard School of Public Health.
+
+This implementation is made available for research
+use without guarantee or warranty.  See the enclosed
+"public license" in the "COPYING" file included with
+this distribution.  Problems should be e-mailed to
+stvjc@gauss.med.harvard.edu.  Every attempt will be
+made to rectify reported problems.  Known deficiencies
+of the software will generally be reported to the user 
+community via the s-news mailing list.
+
+This implementation (version 4.x (readme 1.2)) capitalizes 
+to some extent on the ``object/class'' paradigm described in
+Chambers and Hastie, ``Statistical Models in S'', 1992.
+Support for link, variance, and correlation functions
+written by the user in S will be provided in a future
+release.
+
+NEW FEATURES of Version 4.x: support of "cloglog" link,
+sources graciously supplied by John Maindonald.  Better
+performance (diminished memory leakage) thanks to 
+modifications proposed by Bill Dunlap.
+
+NEW FEATURES of Version 3.x: 1) support of model formulae 
+with glm family objects; 2) elimination of many redundant
+computations in the cgee engine; 3) initialization
+of regression parameter estimates via glm(); improved
+output summary format; 4) installation governed by
+CHAPTER paradigm; 5) errorbranching handled by longjmp
+back to S so that if the model fit fails, control
+is handed back to S; the previous version would exit(1)
+from C back to UNIX; 6) scale parameter estimation
+improved for compatibility with glm(); scale parameter
+may be given a fixed value.
+
+NOTE: glm()-Family functionality is not fully supported.
+The family objects are searched for names of component
+functions, but the functions themselves are not
+used by the gee engine.  Full use of family objects
+is planned in a future rewrite of the code.
+
+"I was able to get your new gee code working under S-PLUS 3.2 for
+Windows 3.2, S-PLUS 3.1 and 3.2 for Sun SPARC and S-PLUS 3.1 for
+HP700.  I had to make some modifications and these are described..."
+[in the file included in this distribution as "PC.HP.notes"]
+
+Installation in S-PLUS is accomplished via  the CHAPTER
+utility.  
+
+----stand alone interface is not as well tested or
+documented as the interface to Splus---------
+
+A ``stand-alone'' version is also obtainable
+from the enclosed sources.  To use, build "gee.a" from
+steps 0-3 below.  Then compile "gee.sa.c" and link with
+gee.a and libm.a.  The file will prompt for model options;
+note that a file "gee.labs" must be present which gives
+white-space delimited labels for variables in the
+rectangular matrix of numbers in "X".  The program will
+read from files "X", "Y", "ID", "N", "OFFSET" and
+"gee.labs" and will write out "gee.log".
+
+Components of the distribution:
+-------------------------------
+cgee.c -- the main engine for solving GEEs
+geeformula.q -- the S-PLUS source code defining the interface
+chanmat.c -- the C-language matrix algebra library used in cgee.c
+normlib.c -- routines supplied to allow the probit link.
+gee.sa.c -- interface for a stand-alone procedure
+
+
+Acknowledgments:
+Several readers of the s-news list have helped by testing
+the code in different environments.  Stephen Kaluzny of
+StatSci made helpful comments which are provided in the
+file "HP.PC.notes".  Einar Arnason and Richard Waterman
+persevered with the code on HP platforms.  Craig Aumann,
+Phil Smith and Larry Muenz made useful criticisms.  Terry
+Therneau provided his model-formulae interface code,
+which has some different features.  The original C and S
+codes for this algorithm were written by V. Carey while
+at Johns Hopkins University School of Public Health, with
+the support of the Multicenter AIDS Cohort Study data 
+analysis center, led by Alvaro Mu\~noz.  If we have failed to
+mention any other collaborators, please accept our apologies.
+Obviously all these contributions are made only in the
+collegial spirit, and no warranties or obligations are
+implied by the distribution of this code.
+
+References:
+%AUTHOR   = Kung-Yee Liang
+%AUTHOR   = Scott L. Zeger
+%TITLE    = Longitudinal data analysis using generalized linear models
+%JOURNAL  = Biometrika
+%VOLUME   = 73
+%PAGES    = 13-22
+%YEAR     = 1986
+
+%AUTHOR   = Vincent Carey
+%TITLE    = Data objects for matrix computations: An overview
+%JOURNAL  = 8 Proc. of Computer Sci. and Stat.: 8th Annual Symp. on the
+	    Interface
+%VOLUME   = 21
+%PAGES    = 157-161
+%YEAR     = 1989
+
+-- the latter paper describes a C++ implementation of GEE for use
+in S; for portability the engine was rewritten in C but the basic
+ideas are as in the paper.
+
+It is also useful to make reference to Statlib in citing work that
+uses such codes.
+
+To do:
+--
+Compilation and distribution for use with PC platforms.
+Waiting for a Watcom compiler to assist with that.
+--
+The family of support functions for printing, summarizing,
+etc. needs to be enriched and better standardized.
+--
+The procedure should genuinely use the glm-family objects.
+--
+Support for modeled correlation with unbalanced data.
+--
+Better support for standalone interface
+--
+etc.
+
+

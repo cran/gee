@@ -1,0 +1,4 @@
+ugee.R: Alterations for R's glm syntax, especially of families
+zzz.R:	Modify quasi to return variance function name.
+
+ugee.c:	Use dnorm and pnorm instead of integration routines.

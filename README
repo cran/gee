@@ -1,0 +1,122 @@
+gee -- solve generalized estimating equations --
+an Splus library implementation
+
+README VERSION 4.15 98/01/28
+-----
+1998 Jan 26/27 -- "unification" -- condense to
+a single C source file, use 8.3 filenames to
+ease porting to windows.  Change type of
+received as.integer data in Cgee from "int*"
+to "long*" so that code runs on DEC alpha.
+Subsequent to the "unification", Dr Brian
+Ripley made a number of code improvements,
+and these improvements are incorporated into
+this release (nominally 4.13 of the C source
+codes).
+
+The file set is now
+
+README  (this file, version 4.15)
+COPYING (the FSF GPL for distribution control)
+README.too (addendum to README)
+blurb  (for statlib indexing)
+ugee.c (version 4.13 of C engine)
+ugee.h  (version 4.1 of unified header)
+convert.h 
+f2c.h  (headers related to f2c conversion of LINPACK)
+gee.d (version 4.8 of user doc)
+ugee.q (version 4.13 of Splus support functions)
+testgee.dpt 
+tests.S 
+testout.413 (output of tests.S)
+
+1997 Dec 1 maintenance change A: repair offset
+handling per Brian Ripley
+
+1997 (September 08) maintenance change: separate
+offset parameter eliminated (supply through model
+formula); clean up certain segments of gee()
+logic.  Thanks to Douglas Grove for comments.
+
+1997 (August 13) maintenance change: problem
+with working correlation estimation in presence
+of singletons resolved.  Thanks to Donna Spiegelman
+for comments.
+
+1998 contact: carey@biostat.harvard.edu
+-----
+
+Modifications relative to last version (1994-1996)
+a) memory leaks diminished or eliminated
+b) cloglog link support added
+c) installation tasks standardized
+
+SHORT INSTALL/TEST DIRECTIONS FOR MOST POPULAR
+UNIX PLATFORMS RUNNING Splus 3.4 
+
+0)place all source code from the shar in the 
+directory that you intend to use as a library 
+component.  you should name this directory "gee"
+or you may have to make some modifications
+to the "dyn.load" commands used in the test
+script.
+
+ 
+1) Note that two versions of .First.lib are in the
+Splus source code file "ugee.q".  By default, a
+version that uses "dyn.load" will be loaded.
+ 
+If you have a system that supports
+dyn.load.lib, you can comment out or remove
+the default .First.lib near the top of "ugee.q"
+and use the alternative (thanks to Brian Ripley):
+ 
+.First.lib <- function(...) dyn.load.lib(...)
+ 
+You will need to do so on SGI and DEC Alpha systems.
+
+After confirming or changing ugee.q to reflect
+the required .First.lib source, run the following
+commands
+ 
+Splus CHAPTER *.c *.d *.q
+make install
+make dyn.load  # dyn.load.shared on SGI and DEC Alpha
+ 
+2)perform the tests.  The file "tests.S"
+is written so as to work from the source
+directory.  If you run it from some other
+directory, you will have to modify the
+library() call.
+
+Splus < tests.S > testout.new
+diff testout.new testout.413
+
+the diff should yield no differences
+beyond platform or S-plus version 
+identifiers.
+
+-----
+
+The file README.too contains miscellaneous
+archival information.  Completion of this
+revision was aided by the following "beta
+testers":
+
+E Altpeter -- contributor of new Windows archive
+P Catalano
+D Dunson
+M Maechler
+J Maindonald -- contributor of new cloglog support
+P Ramsey
+B Ripley -- much helpful advice on portability
+A Rossini 
+P Wollan
+
+The revision was stimulated by Bill Dunlap (Statsci)
+who created patches to rectify memory leaks.
+
+Sincere apologies to any testers who are not
+acknowledged here.
+
+
