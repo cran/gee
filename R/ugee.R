@@ -2,7 +2,7 @@
 
 .First.lib <- function(lib, pkg) library.dynam("gee", pkg, lib)
 
-print.gee <- function(x, digits = NULL, quote = FALSE, prefix = "")
+print.gee <- function(x, digits = NULL, quote = FALSE, prefix = "", ...)
 {
 # gee Splus support  @(#) geeformula.q 4.13 98/01/27
         if(is.null(digits)) digits <- options()$digits else options(digits =
@@ -43,7 +43,7 @@ print.gee <- function(x, digits = NULL, quote = FALSE, prefix = "")
         invisible(x)
 }
 
-print.summary.gee <- function(x, digits = NULL, quote = FALSE, prefix = "" )
+print.summary.gee <- function(x, digits = NULL, quote = FALSE, prefix = "", ... )
 {
 # gee Splus support @(#) geeformula.q 4.13 98/01/27
 	if(is.null(digits))
@@ -82,7 +82,7 @@ print.summary.gee <- function(x, digits = NULL, quote = FALSE, prefix = "" )
 	}
 	invisible(x)
 }
-summary.gee <- function(object, correlation = TRUE)
+summary.gee <- function(object, correlation = TRUE, ...)
 {
 # gee Splus support @(#) geeformula.q 4.13 98/01/27
 	coef <- object$coefficients
