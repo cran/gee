@@ -215,7 +215,7 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
 		offset <- rep(0, length(y))
 	}
         if(length(offset) != length(y)) stop("offset and y not same length")
-	offset _ as.double(offset)
+	offset <- as.double(offset)
 	if(!is.na(R[1])) {
 		Rr <- nrow(R)
 		if(Rr != ncol(R)) {
@@ -265,8 +265,8 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
 	if(!(is.double(N)))
 		N <- as.double(N)
 	modvec <- as.integer(c(linkv, varfunv, corstrv))
-	if (v4.4compat) compatflag_1
-	else compatflag _ 0
+	if (v4.4compat) compatflag <- 1
+	else compatflag <- 0
 	z <- .C("Cgee",
 		x,
 		y,
