@@ -1,6 +1,6 @@
       subroutine dgedi(a,lda,n,ipvt,det,work,job)
-      integer lda,n,ipvt(1),job
-      double precision a(lda,1),det(2),work(1)
+      integer lda,n,ipvt(*),job
+      double precision a(lda,*),det(2),work(*)
 c
 c     dgedi computes the determinant and inverse of a matrix
 c     using the factors computed by dgeco or dgefa.

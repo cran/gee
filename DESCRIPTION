@@ -1,6 +1,6 @@
 Package: gee
 Title: Generalized Estimation Equation solver
-Version: 4.13-9
+Version: 4.13-10
 Date: Gee version 98/1/27, this port 2002-07-03
 Author: Vincent J Carey. Ported to R by Thomas Lumley (versions 3.13 and 4.4) 
         and Brian Ripley <ripley@stats.ox.ac.uk> (version 4.13).

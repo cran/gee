@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <math.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <setjmp.h>
 #include <R_ext/Applic.h> /* BLAS */
 extern void F77_NAME(dgefa)(double*,int*,int*,int*,int*);

@@ -1,6 +1,6 @@
       subroutine dgefa(a,lda,n,ipvt,info)
-      integer lda,n,ipvt(1),info
-      double precision a(lda,1)
+      integer lda,n,ipvt(*),info
+      double precision a(lda,*)
 c
 c     dgefa factors a double precision matrix by gaussian elimination.
 c
