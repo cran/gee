@@ -134,7 +134,7 @@ summary.gee <- function(object, correlation = TRUE)
 	attr(summary,"class") <- "summary.gee"
 	summary
 }
-gee <- function(formula = formula(data), id = id, data = sys.parent(),
+gee <- function(formula = formula(data), id = id, data = parent.frame(),
                 subset, na.action, R = NA, b = NA, tol = 0.001, maxiter = 25,
                 family = gaussian, corstr = "independence", Mv = 1,
                 silent = TRUE, contrasts = NULL, scale.fix = FALSE,
@@ -157,7 +157,7 @@ gee <- function(formula = formula(data), id = id, data = sys.parent(),
 			m$na.action <- as.name("na.omit")
 	}
 	m[[1]] <- as.name("model.frame")
-	m <- eval(m, sys.parent())
+	m <- eval(m, parent.frame())
 	Terms <- attr(m, "terms")
 	y <- as.matrix(model.extract(m, response))
 	x <- model.matrix(Terms, m, contrasts)
@@ -200,7 +200,7 @@ gee <- function(formula = formula(data), id = id, data = sys.parent(),
 		mm <- match.call(expand = FALSE)
 		mm$R <- mm$b <- mm$tol <- mm$maxiter <- mm$link <- mm$varfun <-mm$corstr <- mm$Mv <- mm$silent <- mm$contrasts <-mm$scale.fix <- mm$scale.value <- mm$id<-NULL
 		mm[[1]]<-as.name("glm")
-		beta <- as.numeric(eval(mm,sys.frame(sys.parent()))$coef)
+		beta <- as.numeric(eval(mm, parent.frame())$coef)
 ### </tsl>
 		print(beta)
 	}
