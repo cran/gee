@@ -288,7 +288,8 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
 		silent,
 		err = errstate,
 		scale.fix,
-		as.integer(compatflag))
+		as.integer(compatflag),
+                PACKAGE = "gee")
 	if(z$err != 0)
 		warning(paste("Note: Cgee had an error (code=", z$err,
 			").  Results suspect."))
