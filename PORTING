@@ -1,6 +1,12 @@
 ugee.R: Alterations for R's glm syntax, especially of families
-zzz.R:	Modify quasi to return variance function name.
 
 ugee.c:	Use dnorm and pnorm instead of integration routines.
 
 gee.Rd: Add usable examples.
+
+
+Version 4.13-7: 2002-04-19
+	replace Mathlib.h by Rmath.h
+	remove unnecessary convert.h, zzz.R
+	use BLAS routines, not the translations to C in ugee.c
+	add LINPACK routines dgefa and dgedi

@@ -3,7 +3,7 @@
 
 library(gee)
 
-source("testgee.R")
+source("testgee.dump")
 
 myr <- gee(gsind~x2+x3+x4,id=id,data=testgee)
 myr
@@ -17,7 +17,7 @@ summary(gee(lgind~x2+x3+x4,id=id,data=testgee,family=binomial))
 glm(lgind~x2+x3+x4,data=testgee, start=rep(0,4), # needed in R
     family=quasi(link=logit,variance="mu(1-mu)"))
 
-summary(gee(lgind~x2+x3+x4,id=id,data=testgee,family=binomial,scale.fix=T))
+summary(gee(lgind~x2+x3+x4,id=id,data=testgee,family=binomial,scale.fix=TRUE))
 #glm(lgind~x2+x3+x4,data=testgee,family=binomial)
 
 summary(gee(lg~x2+x3+x4,id=id,data=testgee,family=binomial,corstr="exchangeable"))
@@ -32,7 +32,7 @@ logmat <- cbind(testgee[,"lg1"],testgee[,"nn"])
 xmat   <- cbind(testgee[,"x2"], testgee[,"x3"])
 summary(gee(logmat~xmat,id = testgee[,"id"],family=binomial(link=probit)))
 
-sub<-rep(c(F,F,F,F,T),100)
+sub<-rep(c(FALSE,FALSE,FALSE,FALSE,TRUE),100)
 summary(gee(lg~x2+x4,id=id,data=testgee,family=binomial,subset=sub))
 
 R <- c(1.0,0.2,0.3,0.1,

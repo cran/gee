@@ -101,7 +101,7 @@ gee(formula, id,
 }
 \item{scale.fix}{
   a logical variable; if true, the scale parameter is fixed at
-  the value of \code{scale.value}
+  the value of \code{scale.value}.
 }
 \item{scale.value}{
   numeric variable giving the value to which the scale parameter
@@ -135,14 +135,14 @@ gee(formula, id,
 \references{
   Liang, K.Y. and Zeger, S.L. (1986)
   Longitudinal data analysis using generalized linear models.
-  \emph{Biometrika}, \bold{73} 13-22. 
+  \emph{Biometrika}, \bold{73} 13--22. 
 
   Zeger, S.L. and Liang, K.Y. (1986)
   Longitudinal data analysis for discrete and continuous outcomes.
-  \emph{Biometrics}, \bold{42} 121-130.
+  \emph{Biometrics}, \bold{42} 121--130.
 }
 \seealso{
-\code{\link{glm}}, \code{\link{lm}}, \code{\link{formula}}.
+  \code{\link{glm}}, \code{\link{lm}}, \code{\link{formula}}.
 }
 \examples{
 data(warpbreaks)
@@ -154,9 +154,8 @@ summary(gee(breaks ~ tension, id=wool, data=warpbreaks, corstr="AR-M", Mv=1))
 if(require(MASS)) {
 data(OME)
 ## not fully appropriate link for these data.
-fm <- gee(cbind(Correct, Trials-Correct) ~ Loud + Age +OME, id=ID,
-          data=OME, family=binomial, corstr="exchangeable")
-fm
+(fm <- gee(cbind(Correct, Trials-Correct) ~ Loud + Age + OME, id = ID,
+           data = OME, family = binomial, corstr = "exchangeable"))
 summary(fm)
 }}
 \keyword{nonlinear}

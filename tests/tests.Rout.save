@@ -1,10 +1,30 @@
-S-PLUS : Copyright (c) 1988, 1996 MathSoft, Inc.
-S : Copyright AT&T.
-Version 3.4 Release 1 for Sun SPARC, SunOS 4.1.3_U1 : 1996 
-Working data will be in .Data 
+
+R : Copyright 2002, The R Development Core Team
+Version 1.5.0 Under development (unstable) (2002-04-19)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type `license()' or `licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type `contributors()' for more information.
+
+Type `demo()' for some demos, `help()' for on-line help, or
+`help.start()' for a HTML browser interface to help.
+Type `q()' to quit R.
+
+> 
+> # gee support @(#) tests.q 1.2 96/09/27
+> 
+> library(gee)
+> 
+> source("testgee.dump")
+> 
+> myr <- gee(gsind~x2+x3+x4,id=id,data=testgee)
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
 [1]  0.8107414  2.2933133 -1.1806841  1.4415174
+> myr
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -23,14 +43,14 @@ Maximum cluster size   :  20
 
 
 Coefficients:
- (Intercept)       x2        x3       x4 
-   0.8107414 2.293313 -1.180684 1.441517
+(Intercept)          x2          x3          x4 
+  0.8107414   2.2933133  -1.1806841   1.4415174 
 
 Estimated Scale Parameter:  2.899625
 Number of Iterations:  1
 
 Working Correlation[1:4,1:4]
-     [,1] [,2] [,3] [,4] 
+     [,1] [,2] [,3] [,4]
 [1,]    1    0    0    0
 [2,]    0    1    0    0
 [3,]    0    0    1    0
@@ -39,6 +59,7 @@ Working Correlation[1:4,1:4]
 
 Returned Error Value:
 [1] 0
+> summary(myr)
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -52,22 +73,22 @@ Call:
 gee(formula = gsind ~ x2 + x3 + x4, id = id, data = testgee)
 
 Summary of Residuals:
-      Min        1Q     Median       3Q      Max 
- -5.12638 -1.172122 0.07530777 1.138739 5.692649
+        Min          1Q      Median          3Q         Max 
+-5.12638044 -1.17212201  0.07530777  1.13873892  5.69264860 
 
 
 Coefficients:
-              Estimate Naive S.E.    Naive z Robust S.E.   Robust z 
+              Estimate Naive S.E.    Naive z Robust S.E.   Robust z
 (Intercept)  0.8107414 0.75420946   1.074955  0.76905602   1.054203
-         x2  2.2933133 0.04546161  50.445055  0.04589797  49.965459
-         x3 -1.1806841 0.05974921 -19.760664  0.06847056 -17.243677
-         x4  1.4415174 0.03154513  45.696983  0.03153448  45.712418
+x2           2.2933133 0.04546161  50.445055  0.04589797  49.965459
+x3          -1.1806841 0.05974921 -19.760664  0.06847056 -17.243677
+x4           1.4415174 0.03154513  45.696983  0.03153448  45.712418
 
 Estimated Scale Parameter:  2.899625
 Number of Iterations:  1
 
 Working Correlation
-      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] 
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
  [1,]    1    0    0    0    0    0    0    0    0     0     0     0     0
  [2,]    0    1    0    0    0    0    0    0    0     0     0     0     0
  [3,]    0    0    1    0    0    0    0    0    0     0     0     0     0
@@ -88,7 +109,7 @@ Working Correlation
 [18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [19,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-      [,14] [,15] [,16] [,17] [,18] [,19] [,20] 
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
  [1,]     0     0     0     0     0     0     0
  [2,]     0     0     0     0     0     0     0
  [3,]     0     0     0     0     0     0     0
@@ -109,6 +130,7 @@ Working Correlation
 [18,]     0     0     0     0     1     0     0
 [19,]     0     0     0     0     0     1     0
 [20,]     0     0     0     0     0     0     1
+> summary(gee(gs~x2+x4,id=id,data=testgee,corstr="exchangeable"))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
 [1] -21.504384   4.643727   3.065537
@@ -125,21 +147,21 @@ Call:
 gee(formula = gs ~ x2 + x4, id = id, data = testgee, corstr = "exchangeable")
 
 Summary of Residuals:
-       Min        1Q    Median       3Q      Max 
- -32.60764 -9.824028 0.4309459 10.27683 44.82787
+        Min          1Q      Median          3Q         Max 
+-32.6076365  -9.8240277   0.4309459  10.2768319  44.8278747 
 
 
 Coefficients:
-              Estimate Naive S.E.   Naive z Robust S.E.   Robust z 
-(Intercept) -21.675077  3.7046983  -5.85070   3.5007586  -6.191537
-         x2   4.676098  0.3786822  12.34835   0.3336659  14.014313
-         x4   3.057583  0.2632230  11.61594   0.2251384  13.580903
+              Estimate Naive S.E.  Naive z Robust S.E.  Robust z
+(Intercept) -21.675077  3.7046983 -5.85070   3.5007586 -6.191537
+x2            4.676098  0.3786822 12.34835   0.3336659 14.014313
+x4            3.057583  0.2632230 11.61594   0.2251384 13.580903
 
 Estimated Scale Parameter:  202.3612
 Number of Iterations:  2
 
 Working Correlation
-             [,1]        [,2]        [,3]        [,4]        [,5]        [,6] 
+             [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
  [1,]  1.00000000 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
  [2,] -0.01037861  1.00000000 -0.01037861 -0.01037861 -0.01037861 -0.01037861
  [3,] -0.01037861 -0.01037861  1.00000000 -0.01037861 -0.01037861 -0.01037861
@@ -160,7 +182,7 @@ Working Correlation
 [18,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
 [19,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
 [20,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
-             [,7]        [,8]        [,9]       [,10]       [,11]       [,12] 
+             [,7]        [,8]        [,9]       [,10]       [,11]       [,12]
  [1,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
  [2,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
  [3,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
@@ -181,7 +203,7 @@ Working Correlation
 [18,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
 [19,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
 [20,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
-            [,13]       [,14]       [,15]       [,16]       [,17]       [,18] 
+            [,13]       [,14]       [,15]       [,16]       [,17]       [,18]
  [1,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
  [2,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
  [3,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
@@ -202,7 +224,7 @@ Working Correlation
 [18,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861  1.00000000
 [19,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
 [20,] -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861 -0.01037861
-            [,19]       [,20] 
+            [,19]       [,20]
  [1,] -0.01037861 -0.01037861
  [2,] -0.01037861 -0.01037861
  [3,] -0.01037861 -0.01037861
@@ -223,6 +245,8 @@ Working Correlation
 [18,] -0.01037861 -0.01037861
 [19,]  1.00000000 -0.01037861
 [20,] -0.01037861  1.00000000
+> 
+> summary(gee(gsind~sin(x2)+log(x3)+x4,id=id,data=testgee))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
 [1]  33.017960   1.235559 -12.033930   1.500485
@@ -239,22 +263,22 @@ Call:
 gee(formula = gsind ~ sin(x2) + log(x3) + x4, id = id, data = testgee)
 
 Summary of Residuals:
-       Min        1Q     Median       3Q      Max 
- -14.20992 -2.651097 -0.4994671 2.140383 12.81268
+        Min          1Q      Median          3Q         Max 
+-14.2099238  -2.6510967  -0.4994671   2.1403832  12.8126774 
 
 
 Coefficients:
-              Estimate Naive S.E.    Naive z Robust S.E.   Robust z 
-(Intercept)  33.017960 3.39110198   9.736646  3.03682905  10.872512
-    sin(x2)   1.235559 0.26662685   4.634036  0.44529003   2.774728
-    log(x3) -12.033930 1.43540337  -8.383657  1.33255574  -9.030714
-         x4   1.500485 0.07638601  19.643451  0.06166767  24.331791
+              Estimate Naive S.E.   Naive z Robust S.E.  Robust z
+(Intercept)  33.017960 3.39110198  9.736646  3.03682905 10.872512
+sin(x2)       1.235559 0.26662685  4.634036  0.44529003  2.774728
+log(x3)     -12.033930 1.43540337 -8.383657  1.33255574 -9.030714
+x4            1.500485 0.07638601 19.643451  0.06166767 24.331791
 
 Estimated Scale Parameter:  17.02534
 Number of Iterations:  1
 
 Working Correlation
-      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] 
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
  [1,]    1    0    0    0    0    0    0    0    0     0     0     0     0
  [2,]    0    1    0    0    0    0    0    0    0     0     0     0     0
  [3,]    0    0    1    0    0    0    0    0    0     0     0     0     0
@@ -275,7 +299,7 @@ Working Correlation
 [18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [19,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-      [,14] [,15] [,16] [,17] [,18] [,19] [,20] 
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
  [1,]     0     0     0     0     0     0     0
  [2,]     0     0     0     0     0     0     0
  [3,]     0     0     0     0     0     0     0
@@ -296,86 +320,12 @@ Working Correlation
 [18,]     0     0     0     0     1     0     0
 [19,]     0     0     0     0     0     1     0
 [20,]     0     0     0     0     0     0     1
+> #summary(gee(gsind~gam(x2~x1)$fitted.values+x4,id=id,data=testgee,subset=id<20))
+> 
+> summary(gee(lgind~x2+x3+x4,id=id,data=testgee,family=binomial))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
-[1] -14.809114   2.741855   1.488873
-
- GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
- gee S-function, version 4.13 modified 98/01/27 (1998) 
-
-Model:
- Link:                      Identity 
- Variance to Mean Relation: Gaussian 
- Correlation Structure:     Independent 
-
-Call:
-gee(formula = gsind ~ gam(x2 ~ x1)$fitted.values + x4, id = id, data = testgee, 
-	subset = id < 20)
-
-Summary of Residuals:
-       Min        1Q     Median      3Q      Max 
- -12.32446 -2.709732 0.09834381 2.71298 10.55514
-
-
-Coefficients:
-                             Estimate  Naive S.E.    Naive z Robust S.E. 
-               (Intercept) -14.809114 12.02713546  -1.231308 11.33325693
-gam(x2 ~ x1)$fitted.values   2.741855  1.60186496   1.711664  1.50459971
-                        x4   1.488873  0.09736945  15.290971  0.09147308
-                             Robust z 
-               (Intercept)  -1.306695
-gam(x2 ~ x1)$fitted.values   1.822315
-                        x4  16.276630
-
-Estimated Scale Parameter:  20.68865
-Number of Iterations:  1
-
-Working Correlation
-      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] 
- [1,]    1    0    0    0    0    0    0    0    0     0     0     0     0
- [2,]    0    1    0    0    0    0    0    0    0     0     0     0     0
- [3,]    0    0    1    0    0    0    0    0    0     0     0     0     0
- [4,]    0    0    0    1    0    0    0    0    0     0     0     0     0
- [5,]    0    0    0    0    1    0    0    0    0     0     0     0     0
- [6,]    0    0    0    0    0    1    0    0    0     0     0     0     0
- [7,]    0    0    0    0    0    0    1    0    0     0     0     0     0
- [8,]    0    0    0    0    0    0    0    1    0     0     0     0     0
- [9,]    0    0    0    0    0    0    0    0    1     0     0     0     0
-[10,]    0    0    0    0    0    0    0    0    0     1     0     0     0
-[11,]    0    0    0    0    0    0    0    0    0     0     1     0     0
-[12,]    0    0    0    0    0    0    0    0    0     0     0     1     0
-[13,]    0    0    0    0    0    0    0    0    0     0     0     0     1
-[14,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-[15,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-[16,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-[17,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-[18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-[19,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-[20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-      [,14] [,15] [,16] [,17] [,18] [,19] [,20] 
- [1,]     0     0     0     0     0     0     0
- [2,]     0     0     0     0     0     0     0
- [3,]     0     0     0     0     0     0     0
- [4,]     0     0     0     0     0     0     0
- [5,]     0     0     0     0     0     0     0
- [6,]     0     0     0     0     0     0     0
- [7,]     0     0     0     0     0     0     0
- [8,]     0     0     0     0     0     0     0
- [9,]     0     0     0     0     0     0     0
-[10,]     0     0     0     0     0     0     0
-[11,]     0     0     0     0     0     0     0
-[12,]     0     0     0     0     0     0     0
-[13,]     0     0     0     0     0     0     0
-[14,]     1     0     0     0     0     0     0
-[15,]     0     1     0     0     0     0     0
-[16,]     0     0     1     0     0     0     0
-[17,]     0     0     0     1     0     0     0
-[18,]     0     0     0     0     1     0     0
-[19,]     0     0     0     0     0     1     0
-[20,]     0     0     0     0     0     0     1
-[1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
-[1] "running glm to get initial regression estimate"
-[1]  4.72898053 -0.34746396 -0.21938905 -0.07103332
+[1]  4.72920827 -0.34747868 -0.21939992 -0.07103634
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -386,25 +336,26 @@ Model:
  Correlation Structure:     Independent 
 
 Call:
-gee(formula = lgind ~ x2 + x3 + x4, id = id, data = testgee, family = binomial)
+gee(formula = lgind ~ x2 + x3 + x4, id = id, data = testgee, 
+    family = binomial)
 
 Summary of Residuals:
-        Min         1Q     Median        3Q      Max 
- -0.7537945 -0.3323381 -0.2080574 0.5160616 0.887202
+       Min         1Q     Median         3Q        Max 
+-0.7537945 -0.3323381 -0.2080574  0.5160616  0.8872020 
 
 
 Coefficients:
-               Estimate Naive S.E.   Naive z Robust S.E.  Robust z 
+               Estimate Naive S.E.   Naive z Robust S.E.  Robust z
 (Intercept)  4.72920874 1.03210192  4.582114  0.86323313  5.478484
-         x2 -0.34747871 0.06301385 -5.514323  0.05004796 -6.942915
-         x3 -0.21939993 0.07952035 -2.759041  0.07725222 -2.840047
-         x4 -0.07103635 0.04152051 -1.710874  0.03167549 -2.242628
+x2          -0.34747871 0.06301385 -5.514323  0.05004796 -6.942915
+x3          -0.21939993 0.07952035 -2.759041  0.07725222 -2.840047
+x4          -0.07103635 0.04152051 -1.710874  0.03167549 -2.242628
 
 Estimated Scale Parameter:  1.009587
 Number of Iterations:  1
 
 Working Correlation
-      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] 
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
  [1,]    1    0    0    0    0    0    0    0    0     0     0     0     0
  [2,]    0    1    0    0    0    0    0    0    0     0     0     0     0
  [3,]    0    0    1    0    0    0    0    0    0     0     0     0     0
@@ -425,7 +376,7 @@ Working Correlation
 [18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [19,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-      [,14] [,15] [,16] [,17] [,18] [,19] [,20] 
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
  [1,]     0     0     0     0     0     0     0
  [2,]     0     0     0     0     0     0     0
  [3,]     0     0     0     0     0     0     0
@@ -446,9 +397,23 @@ Working Correlation
 [18,]     0     0     0     0     1     0     0
 [19,]     0     0     0     0     0     1     0
 [20,]     0     0     0     0     0     0     1
+> glm(lgind~x2+x3+x4,data=testgee, start=rep(0,4), # needed in R
++     family=quasi(link=logit,variance="mu(1-mu)"))
+
+Call:  glm(formula = lgind ~ x2 + x3 + x4, family = quasi(link = logit,      variance = "mu(1-mu)"), data = testgee, start = rep(0, 4)) 
+
+Coefficients:
+(Intercept)           x2           x3           x4  
+    4.72898     -0.34746     -0.21939     -0.07103  
+
+Degrees of Freedom: 499 Total (i.e. Null);  496 Residual
+Null Deviance:	    635.6 
+Residual Deviance: 591.4 	AIC: NA 
+> 
+> summary(gee(lgind~x2+x3+x4,id=id,data=testgee,family=binomial,scale.fix=TRUE))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
-[1]  4.72898053 -0.34746396 -0.21938905 -0.07103332
+[1]  4.72920827 -0.34747868 -0.21939992 -0.07103634
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -459,26 +424,26 @@ Model:
  Correlation Structure:     Independent 
 
 Call:
-gee(formula = lgind ~ x2 + x3 + x4, id = id, data = testgee, family = binomial, 
-	scale.fix = T)
+gee(formula = lgind ~ x2 + x3 + x4, id = id, data = testgee, 
+    family = binomial, scale.fix = TRUE)
 
 Summary of Residuals:
-        Min         1Q     Median        3Q      Max 
- -0.7537945 -0.3323381 -0.2080574 0.5160616 0.887202
+       Min         1Q     Median         3Q        Max 
+-0.7537945 -0.3323381 -0.2080574  0.5160616  0.8872020 
 
 
 Coefficients:
-               Estimate Naive S.E.   Naive z Robust S.E.  Robust z 
+               Estimate Naive S.E.   Naive z Robust S.E.  Robust z
 (Intercept)  4.72920874 1.02718977  4.604026  0.86323313  5.478484
-         x2 -0.34747871 0.06271394 -5.540693  0.05004796 -6.942915
-         x3 -0.21939993 0.07914189 -2.772235  0.07725222 -2.840047
-         x4 -0.07103635 0.04132290 -1.719055  0.03167549 -2.242628
+x2          -0.34747871 0.06271394 -5.540693  0.05004796 -6.942915
+x3          -0.21939993 0.07914189 -2.772235  0.07725222 -2.840047
+x4          -0.07103635 0.04132290 -1.719055  0.03167549 -2.242628
 
 Estimated Scale Parameter:  1
 Number of Iterations:  1
 
 Working Correlation
-      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] 
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
  [1,]    1    0    0    0    0    0    0    0    0     0     0     0     0
  [2,]    0    1    0    0    0    0    0    0    0     0     0     0     0
  [3,]    0    0    1    0    0    0    0    0    0     0     0     0     0
@@ -499,7 +464,7 @@ Working Correlation
 [18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [19,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-      [,14] [,15] [,16] [,17] [,18] [,19] [,20] 
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
  [1,]     0     0     0     0     0     0     0
  [2,]     0     0     0     0     0     0     0
  [3,]     0     0     0     0     0     0     0
@@ -520,9 +485,12 @@ Working Correlation
 [18,]     0     0     0     0     1     0     0
 [19,]     0     0     0     0     0     1     0
 [20,]     0     0     0     0     0     0     1
+> #glm(lgind~x2+x3+x4,data=testgee,family=binomial)
+> 
+> summary(gee(lg~x2+x3+x4,id=id,data=testgee,family=binomial,corstr="exchangeable"))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
-[1]  6.4719367 -0.2719323 -0.2759622 -0.1493852
+[1]  6.4719445 -0.2719326 -0.2759626 -0.1493853
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -534,25 +502,25 @@ Model:
 
 Call:
 gee(formula = lg ~ x2 + x3 + x4, id = id, data = testgee, family = binomial, 
-	corstr = "exchangeable")
+    corstr = "exchangeable")
 
 Summary of Residuals:
-        Min         1Q    Median        3Q       Max 
- -0.9132133 -0.4779069 0.2183723 0.4022373 0.8322064
+       Min         1Q     Median         3Q        Max 
+-0.9132133 -0.4779069  0.2183723  0.4022373  0.8322064 
 
 
 Coefficients:
-              Estimate Naive S.E.   Naive z Robust S.E.  Robust z 
+              Estimate Naive S.E.   Naive z Robust S.E.  Robust z
 (Intercept)  6.3714080 1.01872823  6.254276  0.82259807  7.745469
-         x2 -0.2582285 0.05832328 -4.427537  0.06432493 -4.014439
-         x3 -0.2792487 0.07639349 -3.655399  0.05877904 -4.750820
-         x4 -0.1458317 0.04000757 -3.645104  0.02732683 -5.336576
+x2          -0.2582285 0.05832328 -4.427537  0.06432493 -4.014439
+x3          -0.2792487 0.07639349 -3.655399  0.05877904 -4.750820
+x4          -0.1458317 0.04000757 -3.645104  0.02732683 -5.336576
 
 Estimated Scale Parameter:  1.008096
 Number of Iterations:  3
 
 Working Correlation
-             [,1]        [,2]        [,3]        [,4]        [,5]        [,6] 
+             [,1]        [,2]        [,3]        [,4]        [,5]        [,6]
  [1,]  1.00000000 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
  [2,] -0.02048602  1.00000000 -0.02048602 -0.02048602 -0.02048602 -0.02048602
  [3,] -0.02048602 -0.02048602  1.00000000 -0.02048602 -0.02048602 -0.02048602
@@ -573,7 +541,7 @@ Working Correlation
 [18,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
 [19,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
 [20,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
-             [,7]        [,8]        [,9]       [,10]       [,11]       [,12] 
+             [,7]        [,8]        [,9]       [,10]       [,11]       [,12]
  [1,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
  [2,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
  [3,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
@@ -594,7 +562,7 @@ Working Correlation
 [18,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
 [19,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
 [20,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
-            [,13]       [,14]       [,15]       [,16]       [,17]       [,18] 
+            [,13]       [,14]       [,15]       [,16]       [,17]       [,18]
  [1,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
  [2,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
  [3,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
@@ -615,7 +583,7 @@ Working Correlation
 [18,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602  1.00000000
 [19,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
 [20,] -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602 -0.02048602
-            [,19]       [,20] 
+            [,19]       [,20]
  [1,] -0.02048602 -0.02048602
  [2,] -0.02048602 -0.02048602
  [3,] -0.02048602 -0.02048602
@@ -636,9 +604,10 @@ Working Correlation
 [18,] -0.02048602 -0.02048602
 [19,]  1.00000000 -0.02048602
 [20,] -0.02048602  1.00000000
+> summary(gee(lg~x2+x3+x4,id=id,data=testgee,family=binomial,corstr="stat_M_dep",M=1))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
-[1]  6.4719367 -0.2719323 -0.2759622 -0.1493852
+[1]  6.4719445 -0.2719326 -0.2759626 -0.1493853
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -650,25 +619,25 @@ Model:
 
 Call:
 gee(formula = lg ~ x2 + x3 + x4, id = id, data = testgee, family = binomial, 
-	corstr = "stat_M_dep", Mv = 1)
+    corstr = "stat_M_dep", Mv = 1)
 
 Summary of Residuals:
-        Min         1Q   Median        3Q       Max 
- -0.8834271 -0.4920962 0.249136 0.4108783 0.7887767
+       Min         1Q     Median         3Q        Max 
+-0.8834271 -0.4920962  0.2491360  0.4108783  0.7887767 
 
 
 Coefficients:
-              Estimate Naive S.E.   Naive z Robust S.E.  Robust z 
+              Estimate Naive S.E.   Naive z Robust S.E.  Robust z
 (Intercept)  5.4093789 0.84036337  6.436952  0.70900809  7.629502
-         x2 -0.2069859 0.04869638 -4.250540  0.05089218 -4.067147
-         x3 -0.2469902 0.06394554 -3.862508  0.04953133 -4.986545
-         x4 -0.1193671 0.03385364 -3.525976  0.02800656 -4.262113
+x2          -0.2069859 0.04869638 -4.250540  0.05089218 -4.067147
+x3          -0.2469902 0.06394554 -3.862508  0.04953133 -4.986545
+x4          -0.1193671 0.03385364 -3.525976  0.02800656 -4.262113
 
 Estimated Scale Parameter:  0.9787236
 Number of Iterations:  3
 
 Working Correlation
-            [,1]       [,2]       [,3]       [,4]       [,5]       [,6] 
+            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]
  [1,]  1.0000000 -0.3301082  0.0000000  0.0000000  0.0000000  0.0000000
  [2,] -0.3301082  1.0000000 -0.3301082  0.0000000  0.0000000  0.0000000
  [3,]  0.0000000 -0.3301082  1.0000000 -0.3301082  0.0000000  0.0000000
@@ -689,7 +658,7 @@ Working Correlation
 [18,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
 [19,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
 [20,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
-            [,7]       [,8]       [,9]      [,10]      [,11]      [,12] 
+            [,7]       [,8]       [,9]      [,10]      [,11]      [,12]
  [1,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
  [2,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
  [3,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
@@ -710,7 +679,7 @@ Working Correlation
 [18,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
 [19,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
 [20,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
-           [,13]      [,14]      [,15]      [,16]      [,17]      [,18] 
+           [,13]      [,14]      [,15]      [,16]      [,17]      [,18]
  [1,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
  [2,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
  [3,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
@@ -731,7 +700,7 @@ Working Correlation
 [18,]  0.0000000  0.0000000  0.0000000  0.0000000 -0.3301082  1.0000000
 [19,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000 -0.3301082
 [20,]  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000  0.0000000
-           [,19]      [,20] 
+           [,19]      [,20]
  [1,]  0.0000000  0.0000000
  [2,]  0.0000000  0.0000000
  [3,]  0.0000000  0.0000000
@@ -752,9 +721,11 @@ Working Correlation
 [18,] -0.3301082  0.0000000
 [19,]  1.0000000 -0.3301082
 [20,] -0.3301082  1.0000000
+> 
+> summary(gee(lg~x2+x3+x4,id=id,data=testgee,family=binomial(link=probit)))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
-[1]  3.9260233 -0.1659736 -0.1650348 -0.0921386
+[1]  3.92651745 -0.16598539 -0.16507000 -0.09214297
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -765,26 +736,25 @@ Model:
  Correlation Structure:     Independent 
 
 Call:
-gee(formula = lg ~ x2 + x3 + x4, id = id, data = testgee, family = binomial(
-	link = probit))
+gee(formula = lg ~ x2 + x3 + x4, id = id, data = testgee, family = binomial(link = probit))
 
 Summary of Residuals:
-        Min         1Q    Median        3Q       Max 
- -0.9259108 -0.4767799 0.2158545 0.4033761 0.8384386
+       Min         1Q     Median         3Q        Max 
+-0.9259100 -0.4767797  0.2158549  0.4033759  0.8384374 
 
 
 Coefficients:
-               Estimate Naive S.E.   Naive z Robust S.E.  Robust z 
-(Intercept)  3.92613840 0.61214303  6.413760  0.53755167  7.303741
-         x2 -0.16597699 0.03582656 -4.632791  0.04006791 -4.142392
-         x3 -0.16503949 0.04665763 -3.537245  0.03848564 -4.288340
-         x4 -0.09214246 0.02457762 -3.749040  0.01654858 -5.567998
+               Estimate Naive S.E.   Naive z Robust S.E.  Robust z
+(Intercept)  3.92612377 0.61214244  6.413742  0.53755029  7.303733
+x2          -0.16597664 0.03582654 -4.632785  0.04006787 -4.142387
+x3          -0.16503829 0.04665760 -3.537222  0.03848557 -4.288316
+x4          -0.09214249 0.02457760 -3.749043  0.01654858 -5.568001
 
-Estimated Scale Parameter:  1.014784
+Estimated Scale Parameter:  1.014783
 Number of Iterations:  1
 
 Working Correlation
-      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] 
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
  [1,]    1    0    0    0    0    0    0    0    0     0     0     0     0
  [2,]    0    1    0    0    0    0    0    0    0     0     0     0     0
  [3,]    0    0    1    0    0    0    0    0    0     0     0     0     0
@@ -805,7 +775,7 @@ Working Correlation
 [18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [19,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-      [,14] [,15] [,16] [,17] [,18] [,19] [,20] 
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
  [1,]     0     0     0     0     0     0     0
  [2,]     0     0     0     0     0     0     0
  [3,]     0     0     0     0     0     0     0
@@ -826,9 +796,16 @@ Working Correlation
 [18,]     0     0     0     0     1     0     0
 [19,]     0     0     0     0     0     1     0
 [20,]     0     0     0     0     0     0     1
+> # next line does not work in R's glm: needs starting values for quasi
+> #summary(gee(lg~x2+x3+x4,id=id,data=testgee,family=quasi(link=probit,variance="mu(1-mu)")))
+> summary(gee(lg~x2+x3+x4, id=id, data=testgee, b=rep(0,4), family=quasi(link=probit,variance="mu(1-mu)")))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
-[1] "running glm to get initial regression estimate"
-[1]  3.9260233 -0.1659736 -0.1650348 -0.0921386
+[1] "user's initial regression estimate"
+     [,1]
+[1,]    0
+[2,]    0
+[3,]    0
+[4,]    0
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -839,26 +816,26 @@ Model:
  Correlation Structure:     Independent 
 
 Call:
-gee(formula = lg ~ x2 + x3 + x4, id = id, data = testgee, family = quasi(link
-	 = probit, variance = "mu(1-mu)"))
+gee(formula = lg ~ x2 + x3 + x4, id = id, data = testgee, b = rep(0, 
+    4), family = quasi(link = probit, variance = "mu(1-mu)"))
 
 Summary of Residuals:
-        Min         1Q    Median        3Q       Max 
- -0.9259108 -0.4767799 0.2158545 0.4033761 0.8384386
+       Min         1Q     Median         3Q        Max 
+-0.9259108 -0.4767799  0.2158545  0.4033761  0.8384386 
 
 
 Coefficients:
-               Estimate Naive S.E.   Naive z Robust S.E.  Robust z 
+               Estimate Naive S.E.   Naive z Robust S.E.  Robust z
 (Intercept)  3.92613840 0.61214303  6.413760  0.53755167  7.303741
-         x2 -0.16597699 0.03582656 -4.632791  0.04006791 -4.142392
-         x3 -0.16503949 0.04665763 -3.537245  0.03848564 -4.288340
-         x4 -0.09214246 0.02457762 -3.749040  0.01654858 -5.567998
+x2          -0.16597699 0.03582656 -4.632791  0.04006791 -4.142392
+x3          -0.16503949 0.04665763 -3.537245  0.03848564 -4.288340
+x4          -0.09214246 0.02457762 -3.749040  0.01654858 -5.567998
 
 Estimated Scale Parameter:  1.014784
-Number of Iterations:  1
+Number of Iterations:  4
 
 Working Correlation
-      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] 
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
  [1,]    1    0    0    0    0    0    0    0    0     0     0     0     0
  [2,]    0    1    0    0    0    0    0    0    0     0     0     0     0
  [3,]    0    0    1    0    0    0    0    0    0     0     0     0     0
@@ -879,7 +856,7 @@ Working Correlation
 [18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [19,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-      [,14] [,15] [,16] [,17] [,18] [,19] [,20] 
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
  [1,]     0     0     0     0     0     0     0
  [2,]     0     0     0     0     0     0     0
  [3,]     0     0     0     0     0     0     0
@@ -900,6 +877,10 @@ Working Correlation
 [18,]     0     0     0     0     1     0     0
 [19,]     0     0     0     0     0     1     0
 [20,]     0     0     0     0     0     0     1
+> 
+> logmat <- cbind(testgee[,"lg1"],testgee[,"nn"])
+> xmat   <- cbind(testgee[,"x2"], testgee[,"x3"])
+> summary(gee(logmat~xmat,id = testgee[,"id"],family=binomial(link=probit)))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
 [1]  0.51795625 -0.06406827 -0.04156066
@@ -913,25 +894,24 @@ Model:
  Correlation Structure:     Independent 
 
 Call:
-gee(formula = logmat ~ xmat, id = testgee[, "id"], family = binomial(link = 
-	probit))
+gee(formula = logmat ~ xmat, id = testgee[, "id"], family = binomial(link = probit))
 
 Summary of Residuals:
-       Min       1Q   Median     3Q      Max 
- 0.5160816 1.730895 4.665155 7.6862 19.59312
+       Min         1Q     Median         3Q        Max 
+ 0.5160816  1.7308948  4.6651553  7.6862003 19.5931240 
 
 
 Coefficients:
-               Estimate  Naive S.E.   Naive z Robust S.E.  Robust z 
+               Estimate  Naive S.E.   Naive z Robust S.E.  Robust z
 (Intercept)  0.51795627 0.102935017  5.031876 0.104967578  4.934441
-      xmat1 -0.06406827 0.006534226 -9.805029 0.006443532 -9.943037
-      xmat2 -0.04156066 0.008875153 -4.682810 0.010589196 -3.924817
+xmat1       -0.06406827 0.006534226 -9.805029 0.006443532 -9.943037
+xmat2       -0.04156066 0.008875153 -4.682810 0.010589196 -3.924817
 
 Estimated Scale Parameter:  0.6334804
 Number of Iterations:  1
 
 Working Correlation
-      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] 
+      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
  [1,]    1    0    0    0    0    0    0    0    0     0     0     0     0
  [2,]    0    1    0    0    0    0    0    0    0     0     0     0     0
  [3,]    0    0    1    0    0    0    0    0    0     0     0     0     0
@@ -952,7 +932,7 @@ Working Correlation
 [18,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [19,]    0    0    0    0    0    0    0    0    0     0     0     0     0
 [20,]    0    0    0    0    0    0    0    0    0     0     0     0     0
-      [,14] [,15] [,16] [,17] [,18] [,19] [,20] 
+      [,14] [,15] [,16] [,17] [,18] [,19] [,20]
  [1,]     0     0     0     0     0     0     0
  [2,]     0     0     0     0     0     0     0
  [3,]     0     0     0     0     0     0     0
@@ -973,9 +953,12 @@ Working Correlation
 [18,]     0     0     0     0     1     0     0
 [19,]     0     0     0     0     0     1     0
 [20,]     0     0     0     0     0     0     1
+> 
+> sub<-rep(c(FALSE,FALSE,FALSE,FALSE,TRUE),100)
+> summary(gee(lg~x2+x4,id=id,data=testgee,family=binomial,subset=sub))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
-[1]  5.5221446 -0.3467417 -0.2667000
+[1]  5.5219408 -0.3467182 -0.2666980
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -986,32 +969,40 @@ Model:
  Correlation Structure:     Independent 
 
 Call:
-gee(formula = lg ~ x2 + x4, id = id, data = testgee, subset = sub, family = 
-	binomial)
+gee(formula = lg ~ x2 + x4, id = id, data = testgee, subset = sub, 
+    family = binomial)
 
 Summary of Residuals:
-        Min         1Q    Median        3Q       Max 
- -0.8367702 -0.5120235 0.1897604 0.3569406 0.7244263
+       Min         1Q     Median         3Q        Max 
+-0.8367702 -0.5120235  0.1897604  0.3569406  0.7244263 
 
 
 Coefficients:
-              Estimate Naive S.E.   Naive z Robust S.E.  Robust z 
+              Estimate Naive S.E.   Naive z Robust S.E.  Robust z
 (Intercept)  5.5224757  1.5820384  3.490734  1.25770291  4.390922
-         x2 -0.3467620  0.1323609 -2.619823  0.12032183 -2.881954
-         x4 -0.2667172  0.1190969 -2.239497  0.08655567 -3.081453
+x2          -0.3467620  0.1323609 -2.619823  0.12032183 -2.881954
+x4          -0.2667172  0.1190969 -2.239497  0.08655567 -3.081453
 
 Estimated Scale Parameter:  0.9974213
 Number of Iterations:  1
 
 Working Correlation
-     [,1] [,2] [,3] [,4] 
+     [,1] [,2] [,3] [,4]
 [1,]    1    0    0    0
 [2,]    0    1    0    0
 [3,]    0    0    1    0
 [4,]    0    0    0    1
+> 
+> R <- c(1.0,0.2,0.3,0.1,
++        0.2,1.0,0.2,0.3,
++        0.3,0.2,1.0,0.2,
++        0.1,0.3,0.2,1.0)
+> R <- matrix(R,nrow=4)
+> summary(gee(lg1~x2+x4,id=id,data=testgee,family=poisson(link=log),
++              subset=sub,corstr="fixed",R=R))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
-[1]  2.80530257 -0.08997445 -0.04801462
+[1]  2.80530236 -0.08997445 -0.04801461
 
  GEE:  GENERALIZED LINEAR MODELS FOR DEPENDENT DATA
  gee S-function, version 4.13 modified 98/01/27 (1998) 
@@ -1022,29 +1013,31 @@ Model:
  Correlation Structure:     Fixed 
 
 Call:
-gee(formula = lg1 ~ x2 + x4, id = id, data = testgee, subset = sub, R = R, 
-	family = poisson(link = log), corstr = "fixed")
+gee(formula = lg1 ~ x2 + x4, id = id, data = testgee, subset = sub, 
+    R = R, family = poisson(link = log), corstr = "fixed")
 
 Summary of Residuals:
-       Min        1Q     Median      3Q      Max 
- -7.556119 -3.028271 -0.7601115 2.38235 12.53605
+       Min         1Q     Median         3Q        Max 
+-7.5561190 -3.0282712 -0.7601115  2.3823498 12.5360530 
 
 
 Coefficients:
-               Estimate Naive S.E.   Naive z Robust S.E.  Robust z 
+               Estimate Naive S.E.   Naive z Robust S.E.  Robust z
 (Intercept)  3.02620978 0.43234114  6.999588  0.34930120  8.663611
-         x2 -0.10058734 0.04084446 -2.462692  0.04687746 -2.145751
-         x4 -0.06504106 0.03683906 -1.765546  0.03434579 -1.893713
+x2          -0.10058734 0.04084446 -2.462692  0.04687746 -2.145751
+x4          -0.06504106 0.03683906 -1.765546  0.03434579 -1.893713
 
 Estimated Scale Parameter:  3.192382
 Number of Iterations:  3
 
 Working Correlation
-     [,1] [,2] [,3] [,4] 
+     [,1] [,2] [,3] [,4]
 [1,]  1.0  0.2  0.3  0.1
 [2,]  0.2  1.0  0.2  0.3
 [3,]  0.3  0.2  1.0  0.2
 [4,]  0.1  0.3  0.2  1.0
+> summary(gee(lg1~x2+x4,id=id,data=testgee,family=Gamma(link=log),
++              subset=sub,corstr="fixed",R=R))
 [1] "Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 [1] "running glm to get initial regression estimate"
 [1]  2.88114111 -0.08389088 -0.06193112
@@ -1058,26 +1051,27 @@ Model:
  Correlation Structure:     Fixed 
 
 Call:
-gee(formula = lg1 ~ x2 + x4, id = id, data = testgee, subset = sub, R = R, 
-	family = Gamma(link = log), corstr = "fixed")
+gee(formula = lg1 ~ x2 + x4, id = id, data = testgee, subset = sub, 
+    R = R, family = Gamma(link = log), corstr = "fixed")
 
 Summary of Residuals:
-       Min       1Q     Median      3Q     Max 
- -8.342313 -3.05455 -0.6859901 2.25988 12.7656
+       Min         1Q     Median         3Q        Max 
+-8.3423132 -3.0545500 -0.6859901  2.2598797 12.7655998 
 
 
 Coefficients:
-               Estimate Naive S.E.   Naive z Robust S.E.  Robust z 
+               Estimate Naive S.E.   Naive z Robust S.E.  Robust z
 (Intercept)  3.11365404 0.44562055  6.987232  0.33999949  9.157820
-         x2 -0.09008377 0.04002263 -2.250821  0.04218718 -2.135335
-         x4 -0.08356322 0.03655400 -2.286021  0.03547847 -2.355322
+x2          -0.09008377 0.04002263 -2.250821  0.04218718 -2.135335
+x4          -0.08356322 0.03655400 -2.286021  0.03547847 -2.355322
 
 Estimated Scale Parameter:  0.5550168
 Number of Iterations:  4
 
 Working Correlation
-     [,1] [,2] [,3] [,4] 
+     [,1] [,2] [,3] [,4]
 [1,]  1.0  0.2  0.3  0.1
 [2,]  0.2  1.0  0.2  0.3
 [3,]  0.3  0.2  1.0  0.2
 [4,]  0.1  0.3  0.2  1.0
+> 
