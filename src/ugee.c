@@ -10,6 +10,7 @@
 #  include <newredef.h>
 #endif
 #ifdef USING_R
+#include <Rversion.h>
 typedef int Sint;
 #else
 typedef long Sint;
@@ -2414,9 +2415,15 @@ MATRIX *x;
 /* dependence on Numerical Recipes code removed by Thomas Lumley */
 /* normal pdf/cdf now taken from internal R routines (more accurate, too) */
 
-extern double dnorm(double, double, double);
-extern double pnorm(double, double, double);
-
+#if defined(R_VERSION) && R_VERSION >= R_Version(0,99,0)
+#include <R_ext/Mathlib.h>
+#define dnorm1(x) dnorm4(x, 0.0, 1.0, 0)
+#define pnorm1(x) pnorm5(x, 0.0, 1.0, 1, 0)
+#else
+#include <Mathlib.h>
+#define dnorm1(x) dnorm(x, 0.0, 1.0)
+#define pnorm1(x) pnorm(x, 0.0, 1.0)
+#endif
 
 
 /* following added by pj catalano to support probit link option in cgee.c */
@@ -2434,7 +2441,7 @@ tmp = VC_GEE_create_matrix( x->nrows, x->ncols , EPHEMERAL );
 load = tmp->data;
 look = x->data;
 for ( i = 0 ; i < nelem ; i++ )
-	*(load++) = dnorm(*look++, 0.0, 1.0);
+	*(load++) = dnorm1(*look++);
 free_if_ephemeral(x);
 return tmp ;
 }
@@ -2452,7 +2459,7 @@ tmp = VC_GEE_create_matrix( x->nrows, x->ncols , EPHEMERAL );
 load = tmp->data;
 look = x->data;
 for ( i = 0 ; i < nelem ; i++ )
-	*(load++) = pnorm(*look++, 0.0, 1.0);
+	*(load++) = pnorm1(*look++);
 free_if_ephemeral(x);
 return tmp ;
 }

@@ -24,7 +24,7 @@ summary(gee(lg~x2+x3+x4,id=id,data=testgee,family=binomial,corstr="exchangeable"
 summary(gee(lg~x2+x3+x4,id=id,data=testgee,family=binomial,corstr="stat_M_dep",M=1))
 
 summary(gee(lg~x2+x3+x4,id=id,data=testgee,family=binomial(link=probit)))
-# next line does not work in R's glm: neds starting values, can't specify quasi
+# next line does not work in R's glm: needs starting values for quasi
 #summary(gee(lg~x2+x3+x4,id=id,data=testgee,family=quasi(link=probit,variance="mu(1-mu)")))
 summary(gee(lg~x2+x3+x4, id=id, data=testgee, b=rep(0,4), family=quasi(link=probit,variance="mu(1-mu)")))
 
