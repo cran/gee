@@ -2,7 +2,7 @@
 
 .First.lib <- function(lib, pkg) library.dynam("gee", pkg, lib)
 
-print.gee <- function(x, digits = NULL, quote = F, prefix = "")
+print.gee <- function(x, digits = NULL, quote = FALSE, prefix = "")
 {
 # gee Splus support  @(#) geeformula.q 4.13 98/01/27
         if(is.null(digits)) digits <- options()$digits else options(digits =
@@ -43,7 +43,7 @@ print.gee <- function(x, digits = NULL, quote = F, prefix = "")
         invisible(x)
 }
 
-print.summary.gee <- function(x, digits = NULL, quote = F, prefix = "" )
+print.summary.gee <- function(x, digits = NULL, quote = FALSE, prefix = "" )
 {
 # gee Splus support @(#) geeformula.q 4.13 98/01/27
 	if(is.null(digits))
@@ -64,7 +64,7 @@ print.summary.gee <- function(x, digits = NULL, quote = F, prefix = "" )
 	nas <- x$nas
 ###	if(any(nas))
 	if(!is.null(nas) && any(nas))
-		cat("\n\nCoefficients: (", sum(nas), 
+		cat("\n\nCoefficients: (", sum(nas),
 			" not defined because of singularities)\n", sep = "")
 	else cat("\n\nCoefficients:\n")
 	print(x$coefficients, digits = digits)
@@ -82,7 +82,7 @@ print.summary.gee <- function(x, digits = NULL, quote = F, prefix = "" )
 	}
 	invisible(x)
 }
-summary.gee <- function(object, correlation = T)
+summary.gee <- function(object, correlation = TRUE)
 {
 # gee Splus support @(#) geeformula.q 4.13 98/01/27
 	coef <- object$coefficients
@@ -98,8 +98,8 @@ summary.gee <- function(object, correlation = T)
 	nas <- is.na(coef)
 	cnames <- names(coef[!nas])
 	coef <- matrix(rep(coef[!nas], 5), ncol = 5)
-	dimnames(coef) <- list(cnames, c("Estimate", 
-			"Naive S.E.",  "Naive z", 
+	dimnames(coef) <- list(cnames, c("Estimate",
+			"Naive S.E.",  "Naive z",
         		"Robust S.E.", "Robust z"))
 	rse <- sqrt(diag(object$robust.variance))
 	nse <- sqrt(diag(object$naive.variance))
@@ -134,17 +134,17 @@ summary.gee <- function(object, correlation = T)
 	attr(summary,"class") <- "summary.gee"
 	summary
 }
-gee <- function(formula = formula(data), id = id, data = sys.parent(), 
-	subset, na.action, R = NA, b = NA, tol = 
-	0.001, maxiter = 25, family = gaussian, corstr = 
-	"independence", Mv = 1, silent = T, contrasts = NULL, scale.fix = F, 
-	scale.value = 1, v4.4compat=F)
+gee <- function(formula = formula(data), id = id, data = sys.parent(),
+                subset, na.action, R = NA, b = NA, tol = 0.001, maxiter = 25,
+                family = gaussian, corstr = "independence", Mv = 1,
+                silent = TRUE, contrasts = NULL, scale.fix = FALSE,
+	scale.value = 1, v4.4compat = FALSE)
 {
 # gee Splus support @(#) geeformula.q 4.13 98/01/27
 	print("Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27"
 		)
 	call <- match.call()
-	m <- match.call(expand = F)
+	m <- match.call(expand = FALSE)
 	m$R <- m$b <- m$tol <- m$maxiter <- m$link <- m$varfun <-
                m$corstr <- m$Mv <- m$silent <- m$contrasts <-
                m$family <- m$scale.fix <- m$scale.value <- m$v4.4compat <- NULL
@@ -197,7 +197,7 @@ gee <- function(formula = formula(data), id = id, data = sys.parent(),
 	}
 	else {  print("running glm to get initial regression estimate")
 ### <tsl>	beta <- as.numeric(glm(m, family = family)$coef)
-		mm <- match.call(expand = F)
+		mm <- match.call(expand = FALSE)
 		mm$R <- mm$b <- mm$tol <- mm$maxiter <- mm$link <- mm$varfun <-mm$corstr <- mm$Mv <- mm$silent <- mm$contrasts <-mm$scale.fix <- mm$scale.value <- mm$id<-NULL
 		mm[[1]]<-as.name("glm")
 		beta <- as.numeric(eval(mm,sys.frame(sys.parent()))$coef)
@@ -207,7 +207,7 @@ gee <- function(formula = formula(data), id = id, data = sys.parent(),
 	if(length(id) != length(y)) {
 		stop("Id and y not same length")
 	}
-	maxclsz <- as.integer(max(unlist(lapply(split(id, id), 
+	maxclsz <- as.integer(max(unlist(lapply(split(id, id),
 		"length"))))
 	maxiter <- as.integer(maxiter)
 	silent <- as.integer(silent)
@@ -226,14 +226,14 @@ gee <- function(formula = formula(data), id = id, data = sys.parent(),
 		}
 	}
 	else {
-		R <- matrix(as.double(rep(0, maxclsz * maxclsz)), nrow = 
+		R <- matrix(as.double(rep(0, maxclsz * maxclsz)), nrow =
 			maxclsz)
 	}
 	links <- c("identity", "log", "logit", "inverse", "probit",
                    "cloglog")
 	fams <- c("gaussian", "poisson", "binomial", "Gamma", "quasi")
 	varfuns <- c("constant", "mu", "mu(1-mu)", "mu^2")
-	corstrs <- c("independence", "fixed", "stat_M_dep", "non_stat_M_dep", 
+	corstrs <- c("independence", "fixed", "stat_M_dep", "non_stat_M_dep",
 		"exchangeable", "AR-M", "unstructured")
 	linkv <- as.integer(match(c(family$link), links, -1))
         famv <- match(family$family, fams, -1)
@@ -290,7 +290,7 @@ gee <- function(formula = formula(data), id = id, data = sys.parent(),
 		scale.fix,
 		as.integer(compatflag))
 	if(z$err != 0)
-		warning(paste("Note: Cgee had an error (code=", z$err, 
+		warning(paste("Note: Cgee had an error (code=", z$err,
 			").  Results suspect."))
 	if(min(eigen(z$wcor)$values) < 0) {
 		warning("Working correlation estimate not positive definite")
@@ -303,8 +303,8 @@ gee <- function(formula = formula(data), id = id, data = sys.parent(),
 	links <- c("Identity", "Logarithm", "Logit", "Reciprocal", "Probit",
 "Cloglog")
 	varfuns <- c("Gaussian", "Poisson", "Binomial", "Gamma")
-	corstrs <- c("Independent", "Fixed", "Stationary M-dependent", 
-		"Non-Stationary M-dependent", "Exchangeable", "AR-M", 
+	corstrs <- c("Independent", "Fixed", "Stationary M-dependent",
+		"Non-Stationary M-dependent", "Exchangeable", "AR-M",
 		"Unstructured")
 	fit$model <- list()
 	fit$model$link <- links[linkv]
