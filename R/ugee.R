@@ -135,7 +135,7 @@ summary.gee <- function(object, correlation = TRUE, ...)
 	summary
 }
 gee <- function(formula = formula(data), id = id, data = parent.frame(),
-                subset, na.action, R = NA, b = NA, tol = 0.001, maxiter = 25,
+                subset, na.action, R = NULL, b = NULL, tol = 0.001, maxiter = 25,
                 family = gaussian, corstr = "independence", Mv = 1,
                 silent = TRUE, contrasts = NULL, scale.fix = FALSE,
 	scale.value = 1, v4.4compat = FALSE)
@@ -159,7 +159,7 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
 	m[[1]] <- as.name("model.frame")
 	m <- eval(m, parent.frame())
 	Terms <- attr(m, "terms")
-	y <- as.matrix(model.extract(m, response))
+	y <- as.matrix(model.extract(m, "response"))
 	x <- model.matrix(Terms, m, contrasts)
 	N <- rep(1, length(y))
 	if (dim(y)[2]==2) {
@@ -186,7 +186,7 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
         if (is.character(family)) family <- get(family)
         if (is.function(family)) family <- family()
  #	if(deparse(substitute(b)) != "NA") {
-	if (!is.na(b))
+	if (!is.null(b))
 		{
 		beta <- matrix(as.double(b), ncol = 1)
 		if(nrow(beta) != p) {
@@ -216,7 +216,7 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
 	}
         if(length(offset) != length(y)) stop("offset and y not same length")
 	offset <- as.double(offset)
-	if(!is.na(R[1])) {
+	if(!is.null(R)) {
 		Rr <- nrow(R)
 		if(Rr != ncol(R)) {
 			stop("R is not square!")

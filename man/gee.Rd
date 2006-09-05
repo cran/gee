@@ -13,7 +13,7 @@
 \usage{
 gee(formula, id,
     data, subset, na.action,
-    R = NA, b = NA,
+    R = NULL, b = NULL,
     tol = 0.001, maxiter = 25,
     family = gaussian, corstr = "independence",
     Mv = 1, silent = TRUE, contrasts = NULL,
