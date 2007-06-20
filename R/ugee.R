@@ -1,6 +1,6 @@
 # gee Splus support @(#) ugee.q 4.13 98/01/27
 
-.First.lib <- function(lib, pkg) library.dynam("gee", pkg, lib)
+#.First.lib <- function(lib, pkg) library.dynam("gee", pkg, lib)
 
 print.gee <- function(x, digits = NULL, quote = FALSE, prefix = "", ...)
 {
