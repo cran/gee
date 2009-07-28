@@ -67,7 +67,7 @@ gee(formula, id,
   \code{Gamma}, and \code{quasi};
   see the \code{\link{glm}} and \code{\link{family}} documentation.
   Some links are not currently available: \code{1/mu^2} and \code{sqrt} have
-  not been hard-coded in the cgee engine at present.
+  not been hard-coded in the \samp{cgee} engine at present.
   The inverse gaussian variance function is not available.
   All combinations of remaining functions can be obtained
   either by family selection or by the use of \code{quasi}.
@@ -84,7 +84,7 @@ gee(formula, id,
      \code{"unstructured"}
 }
 \item{Mv}{
-  When the corstr is \code{"stat_M_dep"}, \code{"non_stat_M_dep"},
+  When \code{corstr} is \code{"stat_M_dep"}, \code{"non_stat_M_dep"},
   or \code{"AR-M"} then \code{Mv} must be specified.
 }
 \item{silent}{
