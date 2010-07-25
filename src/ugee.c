@@ -259,7 +259,9 @@ Sint *maxsz, *errorstate, *scale_fix;
 								tempmat1), tempmat2);
 		make_permanent(mui);
 		maxfitted = VC_GEE_matmax(VC_GEE_pxq_divby_px1(mui,N[i]));
-		if ((maxfitted >= .9999) && var_mean_rel == (int) Binomial)
+		if ((maxfitted >= .9999 || maxfitted <= .0001 
+		     || ISNAN(maxfitted))
+		    && var_mean_rel == (int) Binomial)
 		{
 		    error("Cgee: error: logistic model for probability has fitted value very close to 1.\nestimates diverging; iteration terminated.");
 		}
@@ -274,7 +276,10 @@ Sint *maxsz, *errorstate, *scale_fix;
 		mui = VC_GEE_px1_times_pxq(N[i], tempmat1);
 		make_permanent(mui);
 		maxfitted = VC_GEE_matmax(VC_GEE_pxq_divby_px1(mui, N[i]));
-		if ((maxfitted >= .9999) && var_mean_rel == Binomial)
+//		if ((maxfitted >= .9999) && var_mean_rel == Binomial)
+		if ((maxfitted >= .9999 || maxfitted <= .0001 
+		     || ISNAN(maxfitted))
+		    && var_mean_rel == (int) Binomial)
 		{
 		    error("Cgee: estimates diverging; iteration terminated");
 		}
@@ -286,7 +291,10 @@ Sint *maxsz, *errorstate, *scale_fix;
 		mui=VC_GEE_px1_times_pxq(N[i], tempmat1);
 		make_permanent(mui);
 		maxfitted = VC_GEE_matmax(VC_GEE_pxq_divby_px1(mui, N[i]));
-		if ((maxfitted >= .999999) && var_mean_rel == (int) Binomial)
+//		if ((maxfitted >= .999999) && var_mean_rel == (int) Binomial)
+		if ((maxfitted >= .9999 || maxfitted <= .0001 
+		     || ISNAN(maxfitted))
+		    && var_mean_rel == (int) Binomial)
 		{
 		    error("Cgee: error: cloglog model for probability has fit ted value very close to 1.\nestimates diverging; iteration terminated.");
 		}

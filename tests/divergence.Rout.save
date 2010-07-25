@@ -1,0 +1,33 @@
+
+R version 2.12.0 Under development (unstable) (2010-07-26 r52617)
+Copyright (C) 2010 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: i386-apple-darwin9.8.0/i386 (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> options(digits=5)
+> library(gee)
+> load("data_for_gee_binomial.RData")
+> try(gee(yb ~ x, family = binomial, id = id, R = R, cor = "fixed"))
+Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27
+running glm to get initial regression estimate
+(Intercept)           x 
+ -0.1291219   0.0019241 
+Error in gee(yb ~ x, family = binomial, id = id, R = R, cor = "fixed") : 
+  Cgee: error: logistic model for probability has fitted value very close to 1.
+estimates diverging; iteration terminated.
+> ## infinite looped in gee 4.3-14
+> 
+> 
+> 
