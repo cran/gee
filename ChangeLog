@@ -1,3 +1,7 @@
+Version 4.13-17 2011-07-11
+
+        rename COPYING to GPL-2
+
 Version 4.13-16 2010-11-25
 
 	print.gee assumed >= 4 groups

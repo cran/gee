@@ -140,7 +140,7 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
 {
     message("Beginning Cgee S-function, @(#) geeformula.q 4.13 98/01/27")
     call <- match.call()
-    m <- match.call(expand = FALSE)
+    m <- match.call(expand.dots = FALSE)
     m$R <- m$b <- m$tol <- m$maxiter <- m$link <- m$varfun <-
         m$corstr <- m$Mv <- m$silent <- m$contrasts <-
             m$family <- m$scale.fix <- m$scale.value <- m$v4.4compat <- NULL
