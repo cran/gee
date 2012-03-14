@@ -50,23 +50,6 @@ typedef struct matrix
 #define get_nelem( x ) (((x)->nrows) * ((x)->ncols))
  
 
-
-static jmp_buf env;
-
-#ifdef __STDC__
-#define Seterr_and_terminate( Code ) { fprintf(stderr, \
-           "chanmat library error" #Code ", returning.\n"); longjmp(env,1); }
-#else
-#define Seterr_and_terminate( Code ) { fprintf(stderr, \
-           "chanmat library error Code , returning.\n"); longjmp(env,1); }
-#endif
-
-#define errorbranch( exitlabel ) \
-if ( setjmp(env) != 0 ) \
-        { \
-        fprintf(stderr,"chanmat error detected, returning to caller\n"); \
-        goto exitlabel ; \
-        }
  
 /* recommended allocation defs by B. Ripley, IX.1996 */
 
@@ -167,17 +150,6 @@ static MATRIX *VC_GEE_luinv();
 static int VC_GEE_split(), VC_GEE_nchanges();
 
 void Cgee() ;
-
-     
-
-#define errorbranch( exitlabel ) \
-if ( setjmp(env) != 0 ) \
-        { \
-        fprintf(stderr,"chanmat error detected, returning to caller\n"); \
-        goto exitlabel ; \
-        }
-
-
 
 #ifndef MAX_NUM_CLUSTS
 #define MAX_NUM_CLUSTS 5000

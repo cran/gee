@@ -57,7 +57,6 @@ Sint *maxsz, *errorstate, *scale_fix;
 
     maxiter = (int*) malloc(sizeof(int));
     *errorstate = UNKNOWN_FAILURE ;
-    errorbranch(Bail);
 
     if (!(*silent)) Rprintf("@(#) ugee.c 98/01/26 Cgee: GEE C source version chanlib 4.12 \n");
 
@@ -799,8 +798,6 @@ Sint *maxsz, *errorstate, *scale_fix;
     }
 
     if (iter < *maxiter) *errorstate = NO_ERROR;
-Bail:
-    ;
 }
 
 

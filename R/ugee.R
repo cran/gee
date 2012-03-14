@@ -193,7 +193,7 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
     else {
         message("running glm to get initial regression estimate")
 ### <tsl>	beta <- as.numeric(glm(m, family = family)$coef)
-        mm <- match.call(expand = FALSE)
+        mm <- match.call(expand.dots = FALSE)
         mm$R <- mm$b <- mm$tol <- mm$maxiter <- mm$link <- mm$varfun <-mm$corstr <- mm$Mv <- mm$silent <- mm$contrasts <-mm$scale.fix <- mm$scale.value <- mm$id<-NULL
         mm[[1]]<-as.name("glm")
         beta <- eval(mm, parent.frame())$coef
