@@ -85,7 +85,6 @@ summary.gee <- function(object, correlation = TRUE, ...)
 {
     coef <- object$coefficients
     resid <- object$residuals
-    n <- length(resid)
     p <- object$rank
     if(is.null(p))
         p <- sum(!is.na(coef))
@@ -254,7 +253,7 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
     modvec <- as.integer(c(linkv, varfunv, corstrv))
     if (v4.4compat) compatflag <- 1
     else compatflag <- 0
-    z <- .C("Cgee",
+    z <- .C(Cgee,
             x,
             y,
             id,
@@ -275,8 +274,7 @@ gee <- function(formula = formula(data), id = id, data = parent.frame(),
             silent,
             err = errstate,
             scale.fix,
-            as.integer(compatflag),
-            PACKAGE = "gee")
+            as.integer(compatflag))
     if(z$err != 0)
         warning("Cgee had an error (code= ", z$err, ").  Results suspect.")
     if(min(eigen(z$wcor)$values) < 0) {

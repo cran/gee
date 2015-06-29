@@ -1,9 +1,9 @@
-4bdc8fcd4c63999bc5bb4d78aa93635c *ChangeLog
-d4a09388107575bb417282d28fbef665 *DESCRIPTION
+84520c41e49b1a67bdce1ee27e2f36ca *ChangeLog
+500314134d26f927c421e242c65de111 *DESCRIPTION
 8ca43cbc842c2336e835926c2166c28b *GPL-2
-e2f7082437d07fc6366b5bed2154e7dc *NAMESPACE
+c23387cfe9d06de5b60d1ae8439691e1 *NAMESPACE
 c766fddedbb008d657c13df8da8927e0 *PORTING
-ffc52fb37ae15b43021cfa36853f7b53 *R/ugee.R
+5e56c4be762c9c2c99642cf248bae938 *R/ugee.R
 e3c6aab581f778cc73e9f6f5eb6aedaa *README
 5d544d15c81d827d254d936fb70ca09c *README.too
 39e05446048ac3101b1ee191d6ba4e9b *blurb
@@ -11,9 +11,9 @@ e3c6aab581f778cc73e9f6f5eb6aedaa *README
 2fa4c7011c2bc0f7449ae151d5cc44ae *src/Makevars
 a998e830d7647683a856b25a4ae26ad1 *src/dgedi.f
 0a954d67dd2bc16afd7fe901666b5108 *src/dgefa.f
-adee89f4883f6edfd9d3aa3657ec7719 *src/ugee.c
+e0d9c35a7d00def4fde0c37645c0df17 *src/ugee.c
 a8a359729843b27eb993a2db419e8519 *src/ugee.h
-6c345a01a37ae69c4711b35230bfe2cc *tests/Examples/gee-Ex.Rout.save
+2c82e4417730e67a06163354867bc1bc *tests/Examples/gee-Ex.Rout.save
 5b366661b020755d7f9d6e5387f1092f *tests/data_for_gee_binomial.RData
 d980c995793f0f7e80266834cf1c8f23 *tests/divergence.R
 06a9579697b8875405a53ccdb70fb1e7 *tests/divergence.Rout.save

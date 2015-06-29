@@ -1,4 +1,6 @@
-useDynLib(gee)
+useDynLib(gee, .registration = TRUE)
+
+importFrom(stats, gaussian, model.extract, model.matrix, quantile)
 
 export(gee)
 
