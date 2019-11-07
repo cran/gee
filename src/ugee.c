@@ -4,6 +4,7 @@
 /* combines sources from the following v 4.9 files */
 /* cgee.c          chanmat.c       clinluxxy.c     diag_as_vec.c   normlib.c */
 
+#include <stddef.h>
 #include <R.h>
 
 /* undefine duplicated macros */
