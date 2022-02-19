@@ -1,20 +1,26 @@
 Package: gee
 Title: Generalized Estimation Equation Solver
-Version: 4.13-20
+Version: 4.13-22
 Depends: stats
 Suggests: MASS
-Date: 2019-11-07
+Date: 2022-02-19
 DateNote: Gee version 1998-01-27
-Author: Vincent J Carey. Ported to R by Thomas Lumley (versions 3.13 and 4.4) 
-        and Brian Ripley <ripley@stats.ox.ac.uk> (version 4.13).
-	Files src/dgedi.f and src/dgefa.f are for LINPACK authored by
-	Cleve Moler.
-	Note that maintainers are not available to give advice on using a
-	package they did not author.
-Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
+Authors@R: c(person(c("Vincent", "J"), "Carey", role = "aut"),
+	     person(c("Thomas", "S"), "Lumley", role = "trl",
+	            comment = "R port of versions 3.13 and 4.4"),
+	     person("Cleve", "Moler", role = "ctb",
+	            comment = "LINPACK routines in src/d*"),
+             person("Brian", "Ripley", role = c("trl", "cre", "ctb"),
+                    email = "ripley@stats.ox.ac.uk",
+		    comment = "R port of version 4.13 and updates"))
 Description: Generalized Estimation Equation solver.
 License: GPL-2
 NeedsCompilation: yes
-Packaged: 2019-11-07 11:14:39 UTC; ripley
+Packaged: 2022-02-19 16:36:38 UTC; ripley
+Author: Vincent J Carey [aut],
+  Thomas S Lumley [trl] (R port of versions 3.13 and 4.4),
+  Cleve Moler [ctb] (LINPACK routines in src/d*),
+  Brian Ripley [trl, cre, ctb] (R port of version 4.13 and updates)
+Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
 Repository: CRAN
-Date/Publication: 2019-11-07 13:12:54 UTC
+Date/Publication: 2022-02-19 16:38:53 UTC
