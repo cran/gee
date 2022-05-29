@@ -25,11 +25,11 @@ void Cgee(x, y, id, n, offset, nobs, p,
 	  S_phi, S_R, tol, maxsz, S_iter, silent, errorstate, scale_fix,
 	  compatflag)
 double *x, *y, *id, *offset, *n;
-Sint *nobs, *p, *M_parm, *compatflag;
-Sint *silent, *parmvec;
-Sint *S_iter;
+int *nobs, *p, *M_parm, *compatflag;
+int *silent, *parmvec;
+int *S_iter;
 double *S_beta, *S_naivvar, *S_robvar, *S_phi, *S_R, *tol;
-Sint *maxsz, *errorstate, *scale_fix;
+int *maxsz, *errorstate, *scale_fix;
 {
 /* MAIN DECLS */
 
@@ -999,7 +999,7 @@ MATRIX *matptr, *discptr, *matarrptr[];
 	    k++;
 	    VC_GEE_start = end+1;
 	    if (i < discptr->nrows) /* don't need iVC_GEE_start at end of loop */
-		iVC_GEE_start = MEL(discptr, i, 0);
+		iVC_GEE_start = (int)MEL(discptr, i, 0);
 	}
 	if (VC_GEE_start < discptr->nrows) end++ ;
     }
@@ -1542,14 +1542,14 @@ MATRIX *X;
 	      X->ncols);
     }
 
-    iVC_GEE_start = MEL(X, 0, 0);
+    iVC_GEE_start = (int)MEL(X, 0, 0);
 
     for (i = 1 ; i < X->nrows ; i++)
     {
 	if (MEL (X, i, 0) != iVC_GEE_start)
 	{
 	    tmp++;
-	    iVC_GEE_start = MEL (X, i, 0);
+	    iVC_GEE_start = (int)MEL (X, i, 0);
 	}
     }
     return tmp;
