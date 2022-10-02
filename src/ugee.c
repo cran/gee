@@ -16,20 +16,11 @@
 /* gee support @(#) previously cgee.c 4.12 98/01/26 */
 #include "ugee.h"
 
-static MATRIX *VC_GEE_diag_as_vec();
-static MATRIX *VC_GEE_matsqrt();
-static MATRIX *VC_GEE_mat1over();
+static MATRIX *VC_GEE_diag_as_vec(MATRIX *);
+static MATRIX *VC_GEE_matsqrt(MATRIX *);
+static MATRIX *VC_GEE_mat1over(MATRIX *);
 
-void Cgee(x, y, id, n, offset, nobs, p,
-	  parmvec, M_parm, S_beta, S_naivvar, S_robvar,
-	  S_phi, S_R, tol, maxsz, S_iter, silent, errorstate, scale_fix,
-	  compatflag)
-double *x, *y, *id, *offset, *n;
-int *nobs, *p, *M_parm, *compatflag;
-int *silent, *parmvec;
-int *S_iter;
-double *S_beta, *S_naivvar, *S_robvar, *S_phi, *S_R, *tol;
-int *maxsz, *errorstate, *scale_fix;
+void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs, int *p, int *parmvec, int *M_parm, double *S_beta, double *S_naivvar, double *S_robvar, double *S_phi, double *S_R, double *tol, int *maxsz, int *S_iter, int  *silent, int *errorstate, int *scale_fix, int *compatflag)
 {
 /* MAIN DECLS */
 
@@ -807,10 +798,9 @@ int *maxsz, *errorstate, *scale_fix;
 
 /* @(#) chanmat.nw 1.3 94/03/09 */
 
-static MATRIX *VC_GEE_create_matrix(nrows, ncols, permanence)
+static MATRIX *VC_GEE_create_matrix(int nrows, int ncols, int permanence)
 /* $Y = |VC_GEE_create_matrix|(r,c,\cdot) :\Rightarrow Y \in M_{r\times c} \wedge
 Y = 0 $ */
-int nrows, ncols, permanence;
 {
     MATRIX *tmp;
     double *head;
@@ -846,8 +836,7 @@ int nrows, ncols, permanence;
     return tmp;
 }
 
-static void VC_GEE_destroy_matrix(mat)
-MATRIX *mat;
+static void VC_GEE_destroy_matrix(MATRIX *mat)
 {
     if (mat == (MATRIX *) NULL) return;
     mat->nrows = 0;
@@ -860,12 +849,11 @@ MATRIX *mat;
 
 
 
-static MATRIX *VC_GEE_transp(mat)
+static MATRIX *VC_GEE_transp(MATRIX *mat)
 /*
 $Y = VC_GEE_transp(X_{r\times c}) :\Rightarrow Y \in M_{c\times r} \wedge
 y_{ji} = x_{ij}. $
 */
-MATRIX *mat;
 {
     double *telem, *inelem, *tbase;
     int nelem;
@@ -887,16 +875,13 @@ MATRIX *mat;
 
 }
 
-static MATRIX *VC_GEE_corner(mat, nr, nc)
+static MATRIX *VC_GEE_corner(MATRIX *mat, int nr, int nc)
 /*
 $ r \leq r^{\prime} \wedge c \leq c^{\prime}
 \wedge X \in M_{r^{\prime} \times c^{\prime}}
 \wedge Y = $|VC_GEE_corner(X,r,c)|$ :\Rightarrow $ */
 /* $ Y \in M_{r \times c} \wedge y_{ij} = x_{ij},
 \thinspace 1 \leq i \leq r, \thinspace 1 \leq j \leq c $ */
-
-MATRIX *mat;
-int nr, nc;
 {
     MATRIX *tmp;
     double *load;
@@ -921,11 +906,8 @@ int nr, nc;
 }
 
 
-static MATRIX *VC_GEE_extract_rows(Source,VC_GEE_start,end)
+static MATRIX *VC_GEE_extract_rows(MATRIX *Source, int VC_GEE_start, int end)
 	/* purely zero-based */
-
-MATRIX *Source;
-int VC_GEE_start, end;
 {
     MATRIX *temp;
     int rows_to_get, i, j;
@@ -946,9 +928,7 @@ int VC_GEE_start, end;
     return temp;
 }
 
-static MATRIX *VC_GEE_extract_cols(x, VC_GEE_start, end)
-MATRIX *x;
-int VC_GEE_start, end;
+static MATRIX *VC_GEE_extract_cols(MATRIX *x, int VC_GEE_start, int end)
 {
     MATRIX *tmp;
     tmp = VC_GEE_transp(x);
@@ -958,8 +938,7 @@ int VC_GEE_start, end;
     return tmp;
 }
 
-static MATRIX *VC_GEE_matcopy(inmat)
-MATRIX *inmat;
+static MATRIX *VC_GEE_matcopy(MATRIX *inmat)
 {
     int i, j;
     MATRIX *outmat;
@@ -976,8 +955,7 @@ MATRIX *inmat;
     return outmat;
 }
 
-static int VC_GEE_split(matptr, discptr, matarrptr)
-MATRIX *matptr, *discptr, *matarrptr[];
+static int VC_GEE_split(MATRIX *matptr, MATRIX *discptr, MATRIX *matarrptr[])
 {   /* discriminator VC_GEE_vector assumed to be integer-valued dbls */
     int i, iVC_GEE_start, k, VC_GEE_start, end;
     if (discptr->ncols != 1)
@@ -1008,9 +986,7 @@ MATRIX *matptr, *discptr, *matarrptr[];
 }
 
 
-static void VC_GEE_plug(VC_GEE_plugm, socket, row, col)
-int row, col;
-MATRIX *VC_GEE_plugm, *socket;  /* not a unix socket */
+static void VC_GEE_plug(MATRIX *VC_GEE_plugm, MATRIX *socket, int row, int col)
 {
     int pcol, prow;
     double *sockload, *VC_GEE_plughead, *sockrow_VC_GEE_start;
@@ -1040,8 +1016,7 @@ MATRIX *VC_GEE_plugm, *socket;  /* not a unix socket */
     free_if_ephemeral(VC_GEE_plugm);
 }
 
-static MATRIX *VC_GEE_form_diag(vec)
-MATRIX *vec;
+static MATRIX *VC_GEE_form_diag(MATRIX *vec)
 {
     MATRIX *tmp;
     int i, ord;
@@ -1054,9 +1029,7 @@ MATRIX *vec;
     return tmp;
 }
 
-static MATRIX *VC_GEE_band(in, wid)
-MATRIX *in;
-int wid;
+static MATRIX *VC_GEE_band(MATRIX *in, int wid)
 {
     MATRIX *tmp;
     int i, j;
@@ -1076,8 +1049,7 @@ int wid;
     return tmp;
 }
 
-static MATRIX *VC_GEE_toeplitz(in)
-MATRIX *in;
+static MATRIX *VC_GEE_toeplitz(MATRIX *in)
 {
     MATRIX *toep, *tin, *tmp;
     int n, p, inrows, incols, i, j;
@@ -1140,8 +1112,7 @@ MATRIX *in;
 
 #define get_nelem(x) (((x)->nrows) * ((x)->ncols))
 
-static double VC_GEE_elsum(x)
-MATRIX *x;
+static double VC_GEE_elsum(MATRIX *x)
 {
     double t=0.;
     double *loc;
@@ -1155,8 +1126,7 @@ MATRIX *x;
     return t;
 }
 
-static MATRIX *VC_GEE_matabs(x)
-MATRIX *x;
+static MATRIX *VC_GEE_matabs(MATRIX *x)
 {
     double *load, *look;
     MATRIX *tmp;
@@ -1172,8 +1142,7 @@ MATRIX *x;
     return tmp ;
 }
 
-static double VC_GEE_matmax(x)
-MATRIX *x;
+static double VC_GEE_matmax(MATRIX *x)
 {
     double t;
     double *loc;
@@ -1192,8 +1161,7 @@ MATRIX *x;
 }
 
 
-static MATRIX *VC_GEE_matexp(x)
-MATRIX *x;
+static MATRIX *VC_GEE_matexp(MATRIX *x)
 {
     double *load, *look;
     MATRIX *tmp;
@@ -1211,8 +1179,7 @@ MATRIX *x;
 
 
 
-static MATRIX *VC_GEE_matadd(mat1, mat2)
-MATRIX *mat1, *mat2;
+static MATRIX *VC_GEE_matadd(MATRIX *mat1, MATRIX *mat2)
 {
     MATRIX *result;
     double *mat1base, *mat2base, *resbase;
@@ -1240,8 +1207,7 @@ MATRIX *mat1, *mat2;
     return result;
 }
 
-static MATRIX *VC_GEE_matsub(mat1, mat2)
-MATRIX *mat1, *mat2;
+static MATRIX *VC_GEE_matsub(MATRIX *mat1, MATRIX *mat2)
 {
     MATRIX *result;
     double *mat1base, *mat2base, *resbase;
@@ -1269,8 +1235,7 @@ MATRIX *mat1, *mat2;
     return result;
 }
 
-static MATRIX *VC_GEE_matmult(mat1, mat2)
-MATRIX *mat1, *mat2;
+static MATRIX *VC_GEE_matmult(MATRIX *mat1, MATRIX *mat2)
 {
     double *mat1base, *mat1loc, *mat2base, *mat2loc, *resbase;
     MATRIX *result;
@@ -1312,9 +1277,8 @@ MATRIX *mat1, *mat2;
 
 
 
-static MATRIX *VC_GEE_px1_times_pxq(px1, pxq) /* mult elements of a colvec */
+static MATRIX *VC_GEE_px1_times_pxq(MATRIX *px1, MATRIX *pxq) /* mult elements of a colvec */
 				/* across corresp row of mat */
-MATRIX *px1, *pxq;
 {
     MATRIX *tmp;
     double *load, colel;
@@ -1344,9 +1308,8 @@ MATRIX *px1, *pxq;
     return tmp;
 }
 
-static MATRIX *VC_GEE_pxq_divby_px1(pxq, px1) /* divide elements of a colvec */
+static MATRIX *VC_GEE_pxq_divby_px1(MATRIX *pxq, MATRIX *px1) /* divide elements of a colvec */
 				/* into corresp row of mat */
-MATRIX *px1, *pxq;
 {
     MATRIX *tmp;
     double *load, colel;
@@ -1376,9 +1339,7 @@ MATRIX *px1, *pxq;
     return tmp;
 }
 
-static MATRIX *VC_GEE_scalar_times_matrix(a, X)
-double a;
-MATRIX *X;
+static MATRIX *VC_GEE_scalar_times_matrix(double a, MATRIX *X)
 {
     MATRIX *tmp;
     double *tbase;
@@ -1398,8 +1359,7 @@ MATRIX *X;
 
 
 
-static void VC_GEE_matdump(mat)
-MATRIX *mat;
+static void VC_GEE_matdump(MATRIX *mat)
 {
     double *curel;
     int outtok = 0;
@@ -1415,8 +1375,7 @@ MATRIX *mat;
 /* DOES NOT CLEAN */
 }
 
-static MATRIX *VC_GEE_luinv(X)
-MATRIX *X;
+static MATRIX *VC_GEE_luinv(MATRIX *X)
 {
     MATRIX *Y;
     double det[2], *work;
@@ -1455,9 +1414,7 @@ MATRIX *X;
     return Y;
 }
 
-static MATRIX *VC_GEE_covlag(inmat, lag, demean)
-MATRIX *inmat;
-int lag, demean;
+static MATRIX *VC_GEE_covlag(MATRIX *inmat, int lag, int demean)
 {
     MATRIX *xrows[MAX_COVLAG], *res, *temp;
     int n, i, j, nv, q;
@@ -1502,8 +1459,7 @@ int lag, demean;
 
 
 
-static MATRIX *VC_GEE_ident(ord)
-int ord;
+static MATRIX *VC_GEE_ident(int ord)
 {
     MATRIX *I;
     int i;
@@ -1514,8 +1470,7 @@ int ord;
     return I;
 }
 
-static MATRIX *VC_GEE_col_1s(k)
-int k;
+static MATRIX *VC_GEE_col_1s(int k)
 {
     MATRIX *tmp;
     int i;
@@ -1528,8 +1483,7 @@ int k;
 }
 
 
-static int VC_GEE_nchanges(X)
-MATRIX *X;
+static int VC_GEE_nchanges(MATRIX *X)
 {
 /* returns integer telling how often the value of X */
 /* changes from row to row.  X must be column VC_GEE_vector */
@@ -1555,11 +1509,10 @@ MATRIX *X;
     return tmp;
 }
 
-static  MATRIX *VC_GEE_matanticlog(x)
-MATRIX *x;
+static  MATRIX *VC_GEE_matanticlog(MATRIX *x)
 {
     double *load, *look;
-    double exp();
+//    double exp();
     MATRIX *tmp;
     int nelem, i;
 
@@ -1578,8 +1531,7 @@ MATRIX *x;
 /* gee support @(#) VC_GEE_diag_as_vec.c 3.3 94/03/09 */
 
 
-static MATRIX *VC_GEE_diag_as_vec(inmat)
-MATRIX *inmat;
+static MATRIX *VC_GEE_diag_as_vec(MATRIX * inmat)
 {
     int i;
     MATRIX *outmat;
@@ -1599,8 +1551,7 @@ MATRIX *inmat;
 
 
 
-static MATRIX *VC_GEE_matsqrt(x)
-MATRIX *x;
+static MATRIX *VC_GEE_matsqrt(MATRIX *x)
 {
     int i,j;
     MATRIX *tmp;
@@ -1653,11 +1604,10 @@ MATRIX *x;
 
 /* following added by pj catalano to support probit link option in cgee.c */
 
-static MATRIX *VC_GEE_matnpdf(x)
-MATRIX *x;
+static MATRIX *VC_GEE_matnpdf(MATRIX *x)
 {
     double *load, *look;
-    double VC_GEE_npdf();
+    double VC_GEE_npdf(void);
     MATRIX *tmp;
     int nelem, i;
 
@@ -1671,11 +1621,10 @@ MATRIX *x;
     return tmp ;
 }
 
-static MATRIX *VC_GEE_matncdf(x)
-MATRIX *x;
+static MATRIX *VC_GEE_matncdf(MATRIX *x)
 {
     double *load, *look;
-    double VC_GEE_ncdf();
+    double VC_GEE_ncdf(void);
     MATRIX *tmp;
     int nelem, i;
 

@@ -55,7 +55,7 @@ typedef struct matrix
 
 /* #ifdef DONT_USE_S_ALLOC
    #else
-   extern void *S_alloc() ;
+   extern void *S_alloc(void) ;
    #define malloc(n) S_alloc(n, 1)
    #define calloc S_alloc
    #define free Free
@@ -114,42 +114,48 @@ for ( j = 0 ; j < Matptr->ncols ; j++ ) \
 /* gee support @(#) chanmatfuns.h 3.2 94/03/09 */
 
 
-static MATRIX *VC_GEE_create_matrix(),
-     *VC_GEE_matcopy(),
-     *VC_GEE_extract_rows(),
-     *VC_GEE_matadd(),
-     *VC_GEE_matsub(),
-     *VC_GEE_matmult(),
-     *VC_GEE_transp(),
-     *VC_GEE_col_1s(),
-     *VC_GEE_matabs(),
-     *VC_GEE_matexp(),
-     *VC_GEE_px1_times_pxq(),
-     *VC_GEE_pxq_divby_px1(),
-     *VC_GEE_scalar_times_matrix(),
-     *VC_GEE_ident(),
-     *VC_GEE_form_diag(),
-     *VC_GEE_corner(),
-     *VC_GEE_covlag(),
-     *VC_GEE_toeplitz(),
-     *VC_GEE_band(),
-     *VC_GEE_extract_cols(),
+static MATRIX *VC_GEE_create_matrix(int, int, int),
+    *VC_GEE_matcopy(MATRIX *),
+    *VC_GEE_extract_rows(MATRIX *, int,  int),
+    *VC_GEE_matadd(MATRIX *, MATRIX *),
+    *VC_GEE_matsub(MATRIX *, MATRIX *),
+    *VC_GEE_matmult(MATRIX *, MATRIX *),
+    *VC_GEE_transp(MATRIX *),
+    *VC_GEE_col_1s(int),
+    *VC_GEE_matabs(MATRIX *),
+    *VC_GEE_matexp(MATRIX *),
+    *VC_GEE_px1_times_pxq(MATRIX *, MATRIX *),
+    *VC_GEE_pxq_divby_px1(MATRIX *, MATRIX *),
+    *VC_GEE_scalar_times_matrix(double, MATRIX *),
+    *VC_GEE_ident(int),
+    *VC_GEE_form_diag(MATRIX *),
+    *VC_GEE_corner(MATRIX *, int, int),
+    *VC_GEE_covlag(MATRIX *, int, int),
+    *VC_GEE_toeplitz(MATRIX *),
+    *VC_GEE_band(MATRIX *, int),
+    *VC_GEE_extract_cols(MATRIX *, int, int),
      /* following two functions added by pj catalano  */
-     *VC_GEE_matnpdf(),
-     *VC_GEE_matncdf(),
-*VC_GEE_matanticlog()
+    *VC_GEE_matnpdf(MATRIX *),
+    *VC_GEE_matncdf(MATRIX *),
+    *VC_GEE_matanticlog(MATRIX *)
      ;
 
-static double VC_GEE_matmax(), VC_GEE_elsum();
+static double VC_GEE_matmax(MATRIX *), VC_GEE_elsum(MATRIX *);
 
-static void VC_GEE_matdump(), VC_GEE_plug(), VC_GEE_destroy_matrix();
+static void VC_GEE_matdump(MATRIX *),
+    VC_GEE_plug(MATRIX *, MATRIX *, int, int),
+    VC_GEE_destroy_matrix(MATRIX *);
 
-static MATRIX *VC_GEE_luinv();
+static MATRIX *VC_GEE_luinv(MATRIX *);
 
 
-static int VC_GEE_split(), VC_GEE_nchanges();
+static int VC_GEE_split(MATRIX *, MATRIX *, MATRIX *[]),
+    VC_GEE_nchanges(MATRIX *);
 
-void Cgee() ;
+void Cgee(double *, double *, double *, double *, double *, int *, int *,
+	  int *, int *, double *, double *, double *, double *, double *,
+	  double *, int *, int *, int *, int *, int *, int *);
+
 
 #ifndef MAX_NUM_CLUSTS
 #define MAX_NUM_CLUSTS 5000
