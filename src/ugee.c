@@ -810,7 +810,7 @@ Y = 0 $ */
 
     if (tmp == NULL)
     {
-	error("VC_GEE_create_matrix: malloc failed %d",
+	error("VC_GEE_create_matrix: malloc failed %lu",
 	      sizeof(struct matrix));
     }
 
