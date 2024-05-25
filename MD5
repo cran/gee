@@ -1,5 +1,5 @@
-1ebdf59d9403a7e2764c0648a85e3ea1 *ChangeLog
-febe6e785712dc570c80e7e6b43452ba *DESCRIPTION
+17c42c2a6a0f64222362183034d410fe *ChangeLog
+5f190d38673b605d4e9ad80f6f10076f *DESCRIPTION
 8ca43cbc842c2336e835926c2166c28b *GPL-2
 c23387cfe9d06de5b60d1ae8439691e1 *NAMESPACE
 c766fddedbb008d657c13df8da8927e0 *PORTING
@@ -9,7 +9,7 @@ e3c6aab581f778cc73e9f6f5eb6aedaa *README
 2fa4c7011c2bc0f7449ae151d5cc44ae *src/Makevars
 a998e830d7647683a856b25a4ae26ad1 *src/dgedi.f
 0a954d67dd2bc16afd7fe901666b5108 *src/dgefa.f
-e3d78cb453c47d177b7b4f964b1e5a75 *src/ugee.c
+01825c3bf52c0cbd1c473bc590863c54 *src/ugee.c
 6c6d1aec5c134a2fa02217aed915ca9e *src/ugee.h
 2c82e4417730e67a06163354867bc1bc *tests/Examples/gee-Ex.Rout.save
 5b366661b020755d7f9d6e5387f1092f *tests/data_for_gee_binomial.RData

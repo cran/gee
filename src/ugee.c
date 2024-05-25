@@ -30,12 +30,12 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
     /* MATRIX  *xpx, *xpy, *tmp; */
     MATRIX *beta, *betasave;
     MATRIX *alpha;
-    MATRIX *R, *tmpR, *Ri;
+    MATRIX *R =  NULL, *tmpR, *Ri;
     MATRIX *One, *mui; /*, *Opmui; */
     MATRIX *Ai, *ei, *ete;
     MATRIX *S1, *S2, *Di, *this_R, *S5, *S2i;
-    MATRIX *tempmat1, *tempmat2, *Aop, *Dop, *zi, *DRop;
-    MATRIX *robvar, *naivvar, *lag_wts, *tmpeep, *scratch, *wt;
+    MATRIX *tempmat1, *tempmat2, *Aop = NULL, *Dop, *zi, *DRop;
+    MATRIX *robvar, *naivvar, *lag_wts = NULL , *tmpeep, *scratch, *wt;
     double phi, dni, phiLZ;
     int iter, ini, i2, j2, k;
     int alpha_VC_GEE_bandwidth;
@@ -811,7 +811,7 @@ Y = 0 $ */
     if (tmp == NULL)
     {
 	error("VC_GEE_create_matrix: malloc failed %lu",
-	      sizeof(struct matrix));
+	      (unsigned long) sizeof(struct matrix));
     }
 
     tmp->nrows = nrows;

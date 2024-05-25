@@ -1,3 +1,27 @@
+Version 4.13-27 2024-05-25
+
+	src/ugee.c: Win64 has sizeof() as unisigned long long
+
+Version 4.13-26 2023-11-27
+
+	ugee.c: change %d to %lu.
+
+Version 4.13-25 2022-10-17
+
+	a warning missed by Apple clang
+
+Version 4.13-24 2022-10-02
+
+	protoize
+
+Version 4.13-23 2022-05-29
+
+	eliminate Sint/Sfloat
+
+Version 4.13-22 2022-02-19
+
+	tweaks requested by KH: remove README.too, blurb
+
 Version 4.13-21 2019-11-07
 
 	Use Authors@R in DESCRIPTION file.
