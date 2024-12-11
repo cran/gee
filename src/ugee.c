@@ -81,7 +81,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 
 #define set_matrix_array(arrname, nel)				\
     if (!(arrname = (MATRIX **)malloc((unsigned)(nel * sizeof(MATRIX *))))) \
-	error("set_matrix_array (mac): out of memory, requesting %d elements",nel);
+	Rf_error("set_matrix_array (mac): out of memory, requesting %d elements",nel);
 
     set_matrix_array(X, nclust)
     set_matrix_array(Y, nclust)
@@ -138,7 +138,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 	    Rprintf("cloglog link, ");
 	    break;
 	default:
-	    error("unknown link");
+	    Rf_error("unknown link");
 	    break;
 	}
 	switch(var_mean_rel)
@@ -156,7 +156,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 	    Rprintf("Gamma var, ");
 	    break;
 	default:
-	    error("Cgee: unknown var_mean_rel. Dies.");
+	    Rf_error("Cgee: unknown var_mean_rel. Dies.");
 	    break;
 	}
 	switch (corstruct)
@@ -183,7 +183,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 	    Rprintf("fixed corstr . ");
 	    break;
 	default:
-	    error("unknown corstr");
+	    Rf_error("unknown corstr");
 	    break;
 	}
 	Rprintf("\n");
@@ -254,7 +254,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 		     || ISNAN(maxfitted))
 		    && var_mean_rel == (int) Binomial)
 		{
-		    error("Cgee: error: logistic model for probability has fitted value very close to 1.\nestimates diverging; iteration terminated.");
+		    Rf_error("Cgee: error: logistic model for probability has fitted value very close to 1.\nestimates diverging; iteration terminated.");
 		}
 		VC_GEE_destroy_matrix(tempmat1);
 		break;
@@ -272,7 +272,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 		     || ISNAN(maxfitted))
 		    && var_mean_rel == (int) Binomial)
 		{
-		    error("Cgee: estimates diverging; iteration terminated");
+		    Rf_error("Cgee: estimates diverging; iteration terminated");
 		}
 		break;
 
@@ -287,12 +287,12 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 		     || ISNAN(maxfitted))
 		    && var_mean_rel == (int) Binomial)
 		{
-		    error("Cgee: error: cloglog model for probability has fit ted value very close to 1.\nestimates diverging; iteration terminated.");
+		    Rf_error("Cgee: error: cloglog model for probability has fit ted value very close to 1.\nestimates diverging; iteration terminated.");
 		}
 		break;
 
 	    default:
-		error("Cgee: unknown link. Dies.");
+		Rf_error("Cgee: unknown link. Dies.");
 		break;
 	    }
 	    make_permanent(mui);
@@ -314,7 +314,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 		Ai = VC_GEE_form_diag(VC_GEE_px1_times_pxq(mui, mui));
 		break;
 	    default:
-		error("Cgee: unknown var_mean_rel. Dies.");
+		Rf_error("Cgee: unknown var_mean_rel. Dies.");
 		break;
 	    }
 	    VC_GEE_destroy_matrix(mui);
@@ -333,7 +333,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 	    if (corstruct == (int) stat_M_dep || corstruct == (int) AR_M)
 	    {
 		if (dni < (double)alpha_VC_GEE_bandwidth)
-		    error("cgee: M-dependence, M=%d, but clustsize=%d\nfatal error for this model",(int)*M_parm,(int)dni);
+		    Rf_error("cgee: M-dependence, M=%d, but clustsize=%d\nfatal error for this model",(int)*M_parm,(int)dni);
 
 		lag_wts = VC_GEE_create_matrix(1, alpha_VC_GEE_bandwidth, PERMANENT);
 		MEL(lag_wts, 0, 0) = (double)1.;
@@ -373,7 +373,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 	    case fixed:
 		break;
 	    default:
-		error("corstruct not implemented.");
+		Rf_error("corstruct not implemented.");
 		break;
 	    }
 	    VC_GEE_destroy_matrix(ei);
@@ -446,7 +446,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 	case fixed:
 	    break;
 	default:
-	    error("corstruct not implemented.");
+	    Rf_error("corstruct not implemented.");
 	    break;
 	}
 	make_permanent(R);
@@ -521,7 +521,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 		break;
 
 	    default:
-		error("Cgee: unknown link. Dies.");
+		Rf_error("Cgee: unknown link. Dies.");
 		break;
 	    }
 	    make_permanent(mui);
@@ -547,7 +547,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 					   mui, mui));
 		break;
 	    default:
-		error("Cgee: unknown var_mean_rel. Dies.");
+		Rf_error("Cgee: unknown var_mean_rel. Dies.");
 		break;
 	    }
 	    VC_GEE_destroy_matrix(mui);
@@ -611,8 +611,8 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 
     if (iter >= *maxiter)
     {
-	warning("Maximum number of iterations consumed");
-	warning("Convergence not achieved; results suspect");
+	Rf_warning("Maximum number of iterations consumed");
+	Rf_warning("Convergence not achieved; results suspect");
 	*errorstate = MAXITER_EXCEEDED ;
     }
 
@@ -688,7 +688,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 	    break;
 
 	default:
-	    error("Cgee: unknown link. Dies.");
+	    Rf_error("Cgee: unknown link. Dies.");
 	    break;
 	}
 	make_permanent(mui);
@@ -711,7 +711,7 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
 				       mui, mui));
 	    break;
 	default:
-	    error("Cgee: unknown var_mean_rel. Dies.\n");
+	    Rf_error("Cgee: unknown var_mean_rel. Dies.\n");
 	    break;
 	}
 	VC_GEE_destroy_matrix(mui);
@@ -763,8 +763,8 @@ void Cgee(double *x, double *y, double *id, double *n, double *offset, int *nobs
     make_permanent(S2i);
     if (*scale_fix) phi = *S_phi;
     if (*scale_fix && var_mean_rel == Gaussian)
-	warning("Scale parameter fixed at %f with Gaussian variance function",
-		*S_phi);
+	Rf_warning("Scale parameter fixed at %f with Gaussian variance function",
+		   *S_phi);
     naivvar = VC_GEE_scalar_times_matrix(phi, S2i);
     robvar = VC_GEE_matmult(VC_GEE_matmult (S2i, S5), S2i);
 
@@ -810,7 +810,7 @@ Y = 0 $ */
 
     if (tmp == NULL)
     {
-	error("VC_GEE_create_matrix: malloc failed %lu",
+	Rf_error("VC_GEE_create_matrix: malloc failed %lu",
 	      (unsigned long) sizeof(struct matrix));
     }
 
@@ -822,7 +822,7 @@ Y = 0 $ */
 
     if (tmp->data == NULL)
     {
-	error("VC_GEE_create_matrix: malloc failed, nrows=%d ncols=%d",
+	Rf_error("VC_GEE_create_matrix: malloc failed, nrows=%d ncols=%d",
 	      nrows, ncols);
     }
 
@@ -890,7 +890,7 @@ $ r \leq r^{\prime} \wedge c \leq c^{\prime}
     sc = mat->ncols;
     if ((nr > sr) || (nc > sc))
     {
-	error("VC_GEE_corner: request not a submatrix.\nfatal error");
+	Rf_error("VC_GEE_corner: request not a submatrix.\nfatal error");
     }
     tmp = VC_GEE_create_matrix(nr, nc, EPHEMERAL);
     load = tmp->data;
@@ -960,7 +960,7 @@ static int VC_GEE_split(MATRIX *matptr, MATRIX *discptr, MATRIX *matarrptr[])
     int i, iVC_GEE_start, k, VC_GEE_start, end;
     if (discptr->ncols != 1)
     {
-	error("VC_GEE_split: discriminator must be column vec.\nVC_GEE_split: ncols = %d", discptr->ncols);
+	Rf_error("VC_GEE_split: discriminator must be column vec.\nVC_GEE_split: ncols = %d", discptr->ncols);
     }
 
     k = 0;
@@ -997,7 +997,7 @@ static void VC_GEE_plug(MATRIX *VC_GEE_plugm, MATRIX *socket, int row, int col)
 
     if (pcol+col > socket->ncols || prow+row > socket->nrows)
     {
-	error("M+-: VC_GEE_plug: socket too small");
+	Rf_error("M+-: VC_GEE_plug: socket too small");
     }
 
     sockload = socket->data + col + row*(socket->ncols);
@@ -1059,7 +1059,7 @@ static MATRIX *VC_GEE_toeplitz(MATRIX *in)
 
     if ((inrows > incols) ? inrows % incols : incols % inrows)
     {
-	error("M+-:VC_GEE_toeplitz: argument invalid");
+	Rf_error("M+-:VC_GEE_toeplitz: argument invalid");
     }
 
     if (inrows > incols)
@@ -1186,7 +1186,7 @@ static MATRIX *VC_GEE_matadd(MATRIX *mat1, MATRIX *mat2)
     int i, j;
     if ((mat1->ncols != mat2->ncols) || (mat1->nrows != mat2->nrows))
     {
-	error("VC_GEE_matadd: args (%dx%d) + (%dx%d) don't conform.\nfatal error",
+	Rf_error("VC_GEE_matadd: args (%dx%d) + (%dx%d) don't conform.\nfatal error",
 	      mat1->nrows, mat1->ncols, mat2->nrows, mat2->ncols);
     }
     result = VC_GEE_create_matrix(mat1->nrows, mat1->ncols, EPHEMERAL);
@@ -1214,7 +1214,7 @@ static MATRIX *VC_GEE_matsub(MATRIX *mat1, MATRIX *mat2)
     int i, j;
     if ((mat1->ncols != mat2->ncols) || (mat1->nrows != mat2->nrows))
     {
-	error("VC_GEE_matsub: args (%dx%d) + (%dx%d) don't conform.\n",
+	Rf_error("VC_GEE_matsub: args (%dx%d) + (%dx%d) don't conform.\n",
 	      mat1->nrows, mat1->ncols, mat2->nrows, mat2->ncols);
     }
     result = VC_GEE_create_matrix(mat1->nrows, mat1->ncols, EPHEMERAL);
@@ -1243,7 +1243,7 @@ static MATRIX *VC_GEE_matmult(MATRIX *mat1, MATRIX *mat2)
 
     if (mat1->ncols != mat2->nrows)
     {
-	error("VC_GEE_matmult: args (%dx%d) * (%dx%d) don't conform.\n",
+	Rf_error("VC_GEE_matmult: args (%dx%d) * (%dx%d) don't conform.\n",
 	      mat1->nrows, mat1->ncols, mat2->nrows, mat2->ncols);
     }
 
@@ -1286,11 +1286,11 @@ static MATRIX *VC_GEE_px1_times_pxq(MATRIX *px1, MATRIX *pxq) /* mult elements o
 
     if (px1->ncols != 1)
     {
-	error("M+-: VC_GEE_px1_times_pxq: arg1 not a col-vec");
+	Rf_error("M+-: VC_GEE_px1_times_pxq: arg1 not a col-vec");
     }
     if (px1->nrows != pxq->nrows)
     {
-	error("M+-: VC_GEE_px1_times_pxq: args not conforming");
+	Rf_error("M+-: VC_GEE_px1_times_pxq: args not conforming");
     }
     tmp = VC_GEE_matcopy(pxq);
     load = tmp->data;
@@ -1316,11 +1316,11 @@ static MATRIX *VC_GEE_pxq_divby_px1(MATRIX *pxq, MATRIX *px1) /* divide elements
     int i, j;
     if (px1->ncols != 1)
     {
-	error("M+-: VC_GEE_pxq_divby_px1: arg2 not a col-vec");
+	Rf_error("M+-: VC_GEE_pxq_divby_px1: arg2 not a col-vec");
     }
     if (px1->nrows != pxq->nrows)
     {
-	error("M+-: VC_GEE_pxq_divby_px1: args not conforming");
+	Rf_error("M+-: VC_GEE_pxq_divby_px1: args not conforming");
     }
 
     tmp = VC_GEE_matcopy(pxq);
@@ -1424,7 +1424,7 @@ static MATRIX *VC_GEE_covlag(MATRIX *inmat, int lag, int demean)
     nrec = (double)1./(double)n;
     if (n > MAX_COVLAG)
     {
-	error("VC_GEE_covlag: arg has > MAX_COVLAG rows");
+	Rf_error("VC_GEE_covlag: arg has > MAX_COVLAG rows");
     }
 
     nv = inmat->ncols;
@@ -1492,7 +1492,7 @@ static int VC_GEE_nchanges(MATRIX *X)
 
     if (X->ncols != 1)
     {
-	error("VC_GEE_nchanges:  must be column VC_GEE_vector; ncols = %d",
+	Rf_error("VC_GEE_nchanges:  must be column VC_GEE_vector; ncols = %d",
 	      X->ncols);
     }
 
@@ -1538,7 +1538,7 @@ static MATRIX *VC_GEE_diag_as_vec(MATRIX * inmat)
 
     if(inmat->ncols!=inmat->nrows)
     {
-	error("M+-: VC_GEE_diag_as_vec: arg is not a square matrix");
+	Rf_error("M+-: VC_GEE_diag_as_vec: arg is not a square matrix");
     }
 
     outmat= VC_GEE_create_matrix(inmat->nrows,1,EPHEMERAL);

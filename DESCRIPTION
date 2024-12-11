@@ -1,9 +1,9 @@
 Package: gee
 Title: Generalized Estimation Equation Solver
-Version: 4.13-27
+Version: 4.13-29
 Depends: stats
 Suggests: MASS
-Date: 2024-05-24
+Date: 2024-12-10
 DateNote: Gee version 1998-01-27
 Authors@R: c(person(c("Vincent", "J"), "Carey", role = "aut"),
 	     person(c("Thomas", "S"), "Lumley", role = "trl",
@@ -11,16 +11,16 @@ Authors@R: c(person(c("Vincent", "J"), "Carey", role = "aut"),
 	     person("Cleve", "Moler", role = "ctb",
 	            comment = "LINPACK routines in src/d*"),
              person("Brian", "Ripley", role = c("trl", "cre", "ctb"),
-                    email = "ripley@stats.ox.ac.uk",
+                    email = "Brian.Ripley@R-project.org",
 		    comment = "R port of version 4.13 and updates"))
 Description: Generalized Estimation Equation solver.
 License: GPL-2
 NeedsCompilation: yes
-Packaged: 2024-05-25 07:39:17 UTC; ripley
+Packaged: 2024-12-10 15:20:40 UTC; ripley
 Author: Vincent J Carey [aut],
   Thomas S Lumley [trl] (R port of versions 3.13 and 4.4),
   Cleve Moler [ctb] (LINPACK routines in src/d*),
   Brian Ripley [trl, cre, ctb] (R port of version 4.13 and updates)
-Maintainer: Brian Ripley <ripley@stats.ox.ac.uk>
+Maintainer: Brian Ripley <Brian.Ripley@R-project.org>
 Repository: CRAN
-Date/Publication: 2024-05-25 07:40:09 UTC
+Date/Publication: 2024-12-11 10:04:11 UTC
